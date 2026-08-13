@@ -4,7 +4,6 @@ export type Lang = (typeof langs)[number];
 export const ui = {
   ko: {
     'nav.about': 'About', 'nav.projects': 'Projects', 'nav.contact': 'Contact',
-    'hero.scroll': '아래로 스크롤',
     'about.github': '깃허브', 'about.projects': '프로젝트',
     'section.about': 'About', 'section.certifications': 'Certifications',
     'section.achievements': 'Achievements', 'section.awards': 'Awards',
@@ -15,7 +14,6 @@ export const ui = {
   },
   en: {
     'nav.about': 'About', 'nav.projects': 'Projects', 'nav.contact': 'Contact',
-    'hero.scroll': 'Scroll down',
     'about.github': 'GitHub', 'about.projects': 'Projects',
     'section.about': 'About', 'section.certifications': 'Certifications',
     'section.achievements': 'Achievements', 'section.awards': 'Awards',
