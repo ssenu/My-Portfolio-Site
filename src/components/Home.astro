@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Contact from './Contact.astro';
+import { getEntry } from 'astro:content';
+import type { Lang } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const site = (await getEntry('site', 'main'))!.data;
+const title = `Portfolio ${site.name[lang]}`;
+---
+<Layout lang={lang} title={title} description={site.about[lang].slice(0, 150)}>
+  <!-- Task 5: <Hero lang={lang} /> -->
+  <!-- Task 8: <About lang={lang} /> / <Certifications lang={lang} /> -->
+  <!-- Task 9: <Achievements lang={lang} /> -->
+  <!-- Task 11: <Projects lang={lang} /> / <ProjectModal lang={lang} /> -->
+  <Contact lang={lang} />
+  <!-- Task 7: <ThemeSwitcher lang={lang} /> -->
+</Layout>

@@ -1,0 +1,50 @@
+/* ── 디자인 토큰: 팔레트 5종 ───────────────────── */
+:root {
+  --bg: #fafafa; --text: #141414; --muted: #6b6b6b;
+  --card: #ffffff; --accent: #2563eb; --border: #e5e5e5;
+  --shadow: 0 4px 16px rgb(0 0 0 / 0.08);
+}
+[data-theme='cream'] {
+  --bg: #f7f2e7; --text: #2b2416; --muted: #7a6f58;
+  --card: #fffaf0; --accent: #c2410c; --border: #e8dfc9;
+  --shadow: 0 4px 16px rgb(80 60 20 / 0.1);
+}
+[data-theme='sky'] {
+  --bg: #eef4fa; --text: #0f2436; --muted: #5b7186;
+  --card: #ffffff; --accent: #0369a1; --border: #d8e4ef;
+  --shadow: 0 4px 16px rgb(20 60 100 / 0.1);
+}
+[data-theme='dark'] {
+  --bg: #111214; --text: #ececec; --muted: #9a9a9a;
+  --card: #1b1d21; --accent: #60a5fa; --border: #2a2d33;
+  --shadow: 0 4px 16px rgb(0 0 0 / 0.5);
+}
+[data-theme='forest'] {
+  --bg: #0f1a14; --text: #e6efe8; --muted: #8faa97;
+  --card: #16241c; --accent: #4ade80; --border: #23392c;
+  --shadow: 0 4px 16px rgb(0 0 0 / 0.5);
+}
+
+/* ── 리셋·베이스 ───────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, 'Segoe UI', 'Malgun Gothic', sans-serif;
+  line-height: 1.6; transition: background-color 0.4s, color 0.4s;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+button { font: inherit; cursor: pointer; }
+
+/* ── 공통 레이아웃·섹션 ───────────────────── */
+.section { max-width: 960px; margin: 0 auto; padding: 96px 24px; }
+.section-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 48px; }
+
+/* ── 스크롤 리빌 (Task 12에서 스크립트 연결) ───────────────────── */
+[data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+[data-reveal].revealed { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+}

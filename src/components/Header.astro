@@ -1,0 +1,26 @@
+---
+import type { Lang } from '../i18n/ui';
+import { t, localePath } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const other: Lang = lang === 'ko' ? 'en' : 'ko';
+---
+<header class="header">
+  <a class="logo" href={localePath(lang)}>ssenu</a>
+  <nav>
+    <a href="#about">{t(lang, 'nav.about')}</a>
+    <a href="#projects">{t(lang, 'nav.projects')}</a>
+    <a href="#contact">{t(lang, 'nav.contact')}</a>
+    <a class="lang-toggle" href={localePath(other)}>{other.toUpperCase()}</a>
+  </nav>
+</header>
+<style>
+  .header { position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between;
+    align-items: center; padding: 16px 24px; background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(8px); }
+  .logo { font-weight: 700; text-decoration: none; }
+  nav { display: flex; gap: 20px; }
+  nav a { text-decoration: none; color: var(--muted); }
+  nav a:hover { color: var(--accent); }
+  .lang-toggle { border: 1px solid var(--border); border-radius: 999px; padding: 2px 12px; }
+</style>

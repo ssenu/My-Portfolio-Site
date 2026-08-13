@@ -1,0 +1,36 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import { getEntry } from 'astro:content';
+import type { Lang } from '../i18n/ui';
+
+interface Props { lang: Lang; title: string; description: string }
+const { lang, title, description } = Astro.props;
+const site = (await getEntry('site', 'main'))!.data;
+---
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline>
+      const saved = localStorage.getItem('theme');
+      if (saved) document.documentElement.dataset.theme = saved;
+    </script>
+  </head>
+  <body>
+    <Header lang={lang} />
+    <main><slot /></main>
+    <footer class="footer">
+      <p>© 2026 {site.name[lang]} · {site.devName}</p>
+    </footer>
+  </body>
+</html>
+<style>
+  .footer { text-align: center; padding: 32px; color: var(--muted); font-size: 0.85rem; }
+</style>

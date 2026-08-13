@@ -1,0 +1,17 @@
+---
+import { getEntry } from 'astro:content';
+import type { Lang } from '../i18n/ui';
+import { t } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const site = (await getEntry('site', 'main'))!.data;
+---
+<section id="contact" class="section" data-reveal>
+  <h2 class="section-title">{t(lang, 'section.contact')}</h2>
+  <p class="email"><a href={`mailto:${site.email}`}>{site.email}</a></p>
+  <p class="gh"><a href={site.github} target="_blank" rel="noopener">GitHub</a></p>
+</section>
+<style>
+  .email, .gh { text-align: center; margin-bottom: 8px; }
+  .email a { font-size: 1.1rem; }
+</style>

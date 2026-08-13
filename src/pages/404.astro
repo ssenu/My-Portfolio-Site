@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { t } from '../i18n/ui';
+---
+<Layout lang="ko" title="404" description="Page not found">
+  <section class="section" style="text-align:center">
+    <h1>404</h1>
+    <p>{t('ko', 'notfound.title')}</p>
+    <p><a href="/">{t('ko', 'notfound.home')}</a></p>
+  </section>
+</Layout>
