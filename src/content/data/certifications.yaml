@@ -1,0 +1,4 @@
+- id: engineer-info-processing
+  issuer: { ko: "한국인터넷진흥협회", en: "Korea Internet Promotion Association" }
+  name: { ko: "정보처리산업기사", en: "Industrial Engineer Information Processing" }
+  date: "2025.06.12"

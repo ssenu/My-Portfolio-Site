@@ -1,0 +1,5 @@
+- id: award-hackathon-2026
+  name: { ko: "2026 해커톤 경진대회 대상 수상", en: "2026 Hackathon Grand Prize" }
+  org: { ko: "주최 기관", en: "Host Organization" }
+  period: "2026.08.11 ~ 2026.08.12"
+  scan: "/images/achievements/award-hackathon-2026.svg"

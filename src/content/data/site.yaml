@@ -1,0 +1,10 @@
+main:
+  name: { ko: "박찬우", en: "Park Chanwoo" }
+  devName: "ssenu"
+  email: "cwhappy123@gmail.com"
+  github: "https://github.com/cwhappy"
+  slogan: ["I Build Things", "Learn from them", "Refine My Story"]
+  about:
+    ko: "어떤 목표로 개발하고 있는지, 무엇을 배웠는지, 앞으로 무엇을 배우고 싶은지를 담은 소개글입니다."
+    en: "An introduction covering my goals as a developer, what I've learned, and what I want to learn next."
+  profileImage: "/images/profile/me.svg"
