@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from './Hero.astro';
 import Contact from './Contact.astro';
 import { getEntry } from 'astro:content';
 import type { Lang } from '../i18n/ui';
@@ -9,7 +10,7 @@ const site = (await getEntry('site', 'main'))!.data;
 const title = `Portfolio ${site.name[lang]}`;
 ---
 <Layout lang={lang} title={title} description={site.about[lang].slice(0, 150)}>
-  <!-- Task 5: <Hero lang={lang} /> -->
+  <Hero lang={lang} />
   <!-- Task 8: <About lang={lang} /> / <Certifications lang={lang} /> -->
   <!-- Task 9: <Achievements lang={lang} /> -->
   <!-- Task 11: <Projects lang={lang} /> / <ProjectModal lang={lang} /> -->
