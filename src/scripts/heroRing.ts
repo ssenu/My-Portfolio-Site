@@ -3,9 +3,9 @@ import { stepRing, addImpulse, BASE_VELOCITY, type RingState } from '../lib/ring
 const DEG_PER_PX = 0.35;      // 드래그 감도
 const CLICK_THRESHOLD_PX = 5; // 이하 이동이면 클릭으로 판정
 const WHEEL_IMPULSE = 0.25;   // 휠 deltaY → 각속도
-const REPEL_RADIUS = 150;     // 커서 반응 반경(px)
-const REPEL_PUSH = 26;        // 최대 밀림 거리(px)
-const REPEL_MAX_DEG = 9;      // 각도 밀림 상한(deg)
+const REPEL_RADIUS = 170;     // 커서 반응 반경(px)
+const REPEL_PUSH = 48;        // 최대 밀림 거리(px)
+const REPEL_MAX_DEG = 16;     // 각도 밀림 상한(deg)
 const REPEL_EASE = 0.16;      // 제자리 복귀 감쇠
 
 export function initHeroRing(root: HTMLElement): void {

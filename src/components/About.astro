@@ -42,8 +42,8 @@ const site = (await getEntry('site', 'main'))!.data;
   .btn { display: inline-flex; align-items: center; padding: 10px 24px; border-radius: 8px;
     text-decoration: none; background: var(--card); border: 1px solid var(--border);
     box-shadow: var(--shadow);
-    transition: transform 0.15s, border-color 0.15s, padding 0.25s ease; }
-  .btn:hover { transform: translateY(-2px); border-color: var(--accent); padding-top: 14px; padding-bottom: 14px; }
+    transition: transform 0.2s ease-out, border-color 0.15s, padding 0.25s ease; }
+  .btn:hover { border-color: var(--accent); padding-top: 14px; padding-bottom: 14px; }
   /* hover 시 오른쪽·위아래로 넓어지며 직접 그린 화살표 등장 (옆 버튼이 자연스럽게 밀려남) */
   .btn .arrow { display: inline-flex; align-items: center; max-width: 0; opacity: 0; overflow: hidden;
     margin-left: 0; transform: translateX(-6px);
@@ -53,3 +53,7 @@ const site = (await getEntry('site', 'main'))!.data;
   @media (prefers-reduced-motion: reduce) { .btn .arrow { transition: none; } }
   @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } .photo { max-width: 260px; margin: 0 auto; } }
 </style>
+<script>
+  import { initMagnetic } from '../scripts/magnetic';
+  initMagnetic([...document.querySelectorAll<HTMLElement>('#about .actions .btn')]);
+</script>
