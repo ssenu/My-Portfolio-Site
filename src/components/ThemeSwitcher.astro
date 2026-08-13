@@ -7,41 +7,86 @@ const themes = [
   { name: 'light', color: '#fafafa' },
   { name: 'cream', color: '#f7f2e7' },
   { name: 'sky', color: '#eef4fa' },
+  { name: 'violet', color: '#f4effa' },
   { name: 'dark', color: '#111214' },
   { name: 'forest', color: '#0f1a14' },
 ];
 ---
-<div class="theme-switcher" role="group" aria-label={t(lang, 'theme.label')}>
-  {themes.map((th) => (
-    <button class="dot" data-theme-choice={th.name} style={`--dot: ${th.color}`}
-      aria-label={`${t(lang, 'theme.label')}: ${th.name}`} />
-  ))}
+<div class="theme-switcher" data-theme-switcher>
+  <div class="dots" role="group" aria-label={t(lang, 'theme.label')}>
+    {themes.map((th, i) => (
+      <button class="dot" data-theme-choice={th.name} style={`--dot: ${th.color}; --i: ${i}`}
+        tabindex="-1" aria-label={`${t(lang, 'theme.label')}: ${th.name}`} />
+    ))}
+  </div>
+  <button class="palette-btn" data-palette-toggle aria-expanded="false"
+    aria-label={t(lang, 'theme.label')}>
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 3a9 9 0 1 0 0 18h1.5a2.5 2.5 0 0 0 0-5H12a2 2 0 0 1 0-4h6.5A2.5 2.5 0 0 0 21 9.5 8.5 8.5 0 0 0 12 3Z" />
+      <circle cx="7.5" cy="11.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="10" cy="7.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="14.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  </button>
 </div>
 <style>
   .theme-switcher { position: fixed; right: 20px; bottom: 20px; z-index: 60;
-    display: flex; gap: 8px; padding: 8px 10px; border-radius: 999px;
-    background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow); }
-  .dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border);
-    background: var(--dot); transition: transform 0.15s; }
-  .dot:hover { transform: scale(1.2); }
+    display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .palette-btn { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--card); color: var(--text); border: 1px solid var(--border);
+    box-shadow: var(--shadow); transition: transform 0.15s; }
+  .palette-btn:hover { transform: scale(1.08) rotate(-10deg); }
+  .dots { display: flex; flex-direction: column-reverse; gap: 8px; }
+  .dot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border);
+    background: var(--dot); box-shadow: var(--shadow);
+    opacity: 0; transform: translateY(calc(12px + var(--i) * 4px)) scale(0.4);
+    pointer-events: none;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+    transition-delay: calc(var(--i) * 0.03s); }
+  .theme-switcher.open .dot { opacity: 1; transform: none; pointer-events: auto; }
+  .dot:hover { transform: scale(1.2) !important; }
   .dot.active { border-color: var(--accent); }
+  @media (prefers-reduced-motion: reduce) {
+    .dot, .palette-btn { transition: none; }
+    .dot { transform: none; }
+  }
 </style>
 <script>
-  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-theme-choice]');
-  const mark = () => {
-    const cur = document.documentElement.dataset.theme ?? 'light';
-    buttons.forEach((b) => b.classList.toggle('active', b.dataset.themeChoice === cur));
-  };
-  buttons.forEach((b) => b.addEventListener('click', () => {
-    const name = b.dataset.themeChoice!;
-    if (name === 'light') {
-      delete document.documentElement.dataset.theme;
-      localStorage.removeItem('theme');
-    } else {
-      document.documentElement.dataset.theme = name;
-      localStorage.setItem('theme', name);
-    }
+  const root = document.querySelector<HTMLElement>('[data-theme-switcher]');
+  if (root) {
+    const toggle = root.querySelector<HTMLButtonElement>('[data-palette-toggle]')!;
+    const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-theme-choice]')];
+
+    const setOpen = (open: boolean) => {
+      root.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      dots.forEach((d) => (d.tabIndex = open ? 0 : -1));
+    };
+    toggle.addEventListener('click', () => setOpen(!root.classList.contains('open')));
+    document.addEventListener('click', (e) => {
+      if (!root.contains(e.target as Node)) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+
+    const mark = () => {
+      const cur = document.documentElement.dataset.theme ?? 'light';
+      dots.forEach((b) => b.classList.toggle('active', b.dataset.themeChoice === cur));
+    };
+    dots.forEach((b) => b.addEventListener('click', () => {
+      const name = b.dataset.themeChoice!;
+      if (name === 'light') {
+        delete document.documentElement.dataset.theme;
+        localStorage.removeItem('theme');
+      } else {
+        document.documentElement.dataset.theme = name;
+        localStorage.setItem('theme', name);
+      }
+      mark();
+      setOpen(false);
+    }));
     mark();
-  }));
-  mark();
+  }
 </script>

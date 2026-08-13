@@ -3,3 +3,13 @@
   org: { ko: "주최 기관", en: "Host Organization" }
   period: "2026.08.11 ~ 2026.08.12"
   scan: "/images/achievements/award-hackathon-2026.svg"
+- id: award-contest-2025
+  name: { ko: "2025 SW 개발 공모전 우수상", en: "2025 SW Development Contest Excellence Award" }
+  org: { ko: "지역 SW 진흥원", en: "Regional SW Promotion Agency" }
+  period: "2025.11.01 ~ 2025.11.02"
+  scan: "/images/achievements/award-contest-2025.svg"
+- id: award-capstone-2026
+  name: { ko: "2026 캡스톤 디자인 경진대회 최우수상", en: "2026 Capstone Design Competition Top Prize" }
+  org: { ko: "대학 공학교육혁신센터", en: "University Engineering Education Center" }
+  period: "2026.06.20 ~ 2026.06.21"
+  scan: "/images/achievements/award-capstone-2026.svg"
