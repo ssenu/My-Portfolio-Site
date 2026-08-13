@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import type { Lang } from '../i18n/ui';
+import { t } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+<section id="projects" class="section" data-reveal>
+  <h2 class="section-title">{t(lang, 'section.projects')}</h2>
+  <div class="project-grid">
+    {projects.map((p) => (
+      <button class="project-card" data-slug={p.id}>
+        <img src={p.data.thumbnail} alt={p.data.title[lang]} loading="lazy" />
+        <div class="card-body">
+          <h3>{p.data.title[lang]}</h3>
+          <p>{p.data.summary[lang]}</p>
+        </div>
+      </button>
+    ))}
+  </div>
+</section>
+<style>
+  .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .project-card { text-align: left; border: 1px solid var(--border); border-radius: 12px;
+    overflow: hidden; background: var(--card); padding: 0; box-shadow: var(--shadow);
+    transition: transform 0.15s; }
+  .project-card:hover { transform: translateY(-4px); }
+  .project-card img { aspect-ratio: 4 / 3; object-fit: cover; width: 100%;
+    transition: transform 0.3s; }
+  .project-card:hover img { transform: scale(1.05); }
+  .card-body { padding: 16px; }
+  .card-body p { color: var(--muted); font-size: 0.9rem; margin-top: 4px; }
+  @media (max-width: 900px) { .project-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .project-grid { grid-template-columns: 1fr; } }
+</style>

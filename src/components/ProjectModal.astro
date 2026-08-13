@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import { marked } from 'marked';
+import { splitBilingual } from '../lib/bilingual';
+import type { Lang } from '../i18n/ui';
+import { t } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const rendered = projects.map((p) => ({
+  ...p,
+  html: marked.parse(splitBilingual(p.body ?? '')[lang]) as string,
+}));
+---
+<dialog class="project-modal" data-project-modal>
+  <button class="pm-close" data-pm-close aria-label={t(lang, 'modal.close')}>×</button>
+  <div class="pm-content" data-pm-content></div>
+</dialog>
+{rendered.map((p) => (
+  <template data-project-tpl={p.id}>
+    <h2>{p.data.title[lang]}</h2>
+    <p class="pm-period">{p.data.period}</p>
+    <ul class="pm-tech">{p.data.tech.map((tech) => <li>{tech}</li>)}</ul>
+    <div class="pm-actions">
+      <a class="btn" href={p.data.github} target="_blank" rel="noopener">{t(lang, 'modal.github')}</a>
+      {p.data.demo && <a class="btn" href={p.data.demo} target="_blank" rel="noopener">{t(lang, 'modal.demo')}</a>}
+    </div>
+    {p.data.images.map((src) => <img src={src} alt={p.data.title[lang]} loading="lazy" />)}
+    <div class="pm-body" set:html={p.html} />
+  </template>
+))}
+<style is:global>
+  .project-modal { width: min(720px, 92vw); max-height: 88vh; border: 1px solid var(--border);
+    border-radius: 16px; background: var(--bg); color: var(--text); padding: 32px; overflow-y: auto; }
+  .project-modal::backdrop { background: rgb(0 0 0 / 0.6); }
+  .pm-close { position: sticky; top: 0; float: right; background: var(--card);
+    border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; }
+  .pm-period { color: var(--muted); margin: 4px 0 12px; }
+  .pm-tech { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .pm-tech li { background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+    padding: 2px 12px; font-size: 0.85rem; }
+  .pm-actions { display: flex; gap: 12px; margin-bottom: 20px; }
+  .pm-actions .btn { padding: 8px 20px; border: 1px solid var(--border); border-radius: 8px;
+    text-decoration: none; background: var(--card); }
+  .pm-actions .btn:hover { border-color: var(--accent); }
+  .pm-content img { border-radius: 8px; margin-bottom: 16px; }
+  .pm-body :is(h2, h3) { margin: 20px 0 8px; }
+  .pm-body p { margin-bottom: 12px; }
+</style>
+<script>
+  import { initProjectModal } from '../scripts/projectModal';
+  initProjectModal();
+</script>
