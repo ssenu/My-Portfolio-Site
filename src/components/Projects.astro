@@ -10,7 +10,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
   <h2 class="section-title">{t(lang, 'section.projects')}</h2>
   <div class="project-grid">
     {projects.map((p) => (
-      <button class="project-card" data-slug={p.id}>
+      <button class="project-card" data-slug={p.id} data-reveal-item>
         <img src={p.data.thumbnail} alt={p.data.title[lang]} loading="lazy" />
         <div class="card-body">
           <h3>{p.data.title[lang]}</h3>

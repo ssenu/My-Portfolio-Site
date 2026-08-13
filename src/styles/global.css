@@ -61,18 +61,34 @@ button { font: inherit; cursor: pointer; }
 
 /* ── 스태거·마이크로 인터랙션 (Task 12) ───────────────────── */
 /* 그리드 자식 순차 등장 */
-[data-reveal] > .project-grid > *, [data-reveal] .ach-scans > * { transition-delay: 0s; }
-[data-reveal]:not(.revealed) :is(.project-grid, .ach-scans) > * { opacity: 0; transform: translateY(16px); }
-[data-reveal].revealed:not(.reveal-done) :is(.project-grid, .ach-scans) > * {
+[data-reveal] .ach-scans > * { transition-delay: 0s; }
+[data-reveal]:not(.revealed) .ach-scans > * { opacity: 0; transform: translateY(16px); }
+[data-reveal].revealed:not(.reveal-done) .ach-scans > * {
   opacity: 1; transform: none; transition: opacity 0.5s ease, transform 0.5s ease; }
-[data-reveal].revealed:not(.reveal-done) :is(.project-grid, .ach-scans) > *:nth-child(2) { transition-delay: 0.08s; }
-[data-reveal].revealed:not(.reveal-done) :is(.project-grid, .ach-scans) > *:nth-child(3) { transition-delay: 0.16s; }
-[data-reveal].revealed:not(.reveal-done) :is(.project-grid, .ach-scans) > *:nth-child(4) { transition-delay: 0.24s; }
-[data-reveal].revealed:not(.reveal-done) :is(.project-grid, .ach-scans) > *:nth-child(5) { transition-delay: 0.32s; }
-[data-reveal].revealed:not(.reveal-done) :is(.project-grid, .ach-scans) > *:nth-child(n+6) { transition-delay: 0.4s; }
+[data-reveal].revealed:not(.reveal-done) .ach-scans > *:nth-child(2) { transition-delay: 0.08s; }
+[data-reveal].revealed:not(.reveal-done) .ach-scans > *:nth-child(3) { transition-delay: 0.16s; }
+[data-reveal].revealed:not(.reveal-done) .ach-scans > *:nth-child(4) { transition-delay: 0.24s; }
+[data-reveal].revealed:not(.reveal-done) .ach-scans > *:nth-child(5) { transition-delay: 0.32s; }
+[data-reveal].revealed:not(.reveal-done) .ach-scans > *:nth-child(n+6) { transition-delay: 0.4s; }
+
+/* 프로젝트 카드: 카드 단위 개별 리빌 (스크롤 위치 따라 한 층씩) */
+[data-reveal-item][data-reveal-item] { opacity: 0; transform: translateY(28px); }
+[data-reveal-item][data-reveal-item]:not(.reveal-done) { transition: opacity 0.8s ease, transform 0.8s ease; }
+[data-reveal-item][data-reveal-item].revealed { opacity: 1; transform: none; }
+/* 같은 층 안에서는 왼쪽부터 순차 등장 (열 위치 기반 지연) */
+.project-grid > [data-reveal-item]:nth-child(3n+2):not(.reveal-done) { transition-delay: 0.15s; }
+.project-grid > [data-reveal-item]:nth-child(3n+3):not(.reveal-done) { transition-delay: 0.3s; }
+@media (max-width: 900px) {
+  .project-grid > [data-reveal-item]:nth-child(n):not(.reveal-done) { transition-delay: 0s; }
+  .project-grid > [data-reveal-item]:nth-child(2n):not(.reveal-done) { transition-delay: 0.15s; }
+}
+@media (max-width: 560px) {
+  .project-grid > [data-reveal-item]:nth-child(n):not(.reveal-done) { transition-delay: 0s; }
+}
 
 /* 링크 hover 색상 */
 a:not(.btn):not(.logo):hover { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal] :is(.project-grid, .ach-scans) > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+  [data-reveal] .ach-scans > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+  [data-reveal-item][data-reveal-item] { opacity: 1; transform: none; transition: none; }
 }

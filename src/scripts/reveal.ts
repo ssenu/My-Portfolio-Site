@@ -1,6 +1,7 @@
 export function initReveal(): void {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('revealed', 'reveal-done'));
+    document.querySelectorAll('[data-reveal], [data-reveal-item]')
+      .forEach((el) => el.classList.add('revealed', 'reveal-done'));
     return;
   }
   const timers = new WeakMap<Element, ReturnType<typeof setTimeout>>();
@@ -19,5 +20,5 @@ export function initReveal(): void {
       }
     }
   }, { threshold: 0.15 });
-  document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+  document.querySelectorAll('[data-reveal], [data-reveal-item]').forEach((el) => io.observe(el));
 }
