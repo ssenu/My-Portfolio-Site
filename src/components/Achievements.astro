@@ -44,7 +44,8 @@ const scans = [...awards, ...programs].filter((a) => a.data.scan);
   .ach-lists h3 { margin: 24px 0 12px; }
   .ach-lists ul { list-style: none; padding: 0; }
   .ach-item { padding: 8px 10px; border-radius: 8px; transition: background 0.15s, color 0.15s; }
-  .period { color: var(--muted); font-size: 0.85rem; margin-left: 8px; }
+  .period { display: block; color: var(--muted); font-size: 0.85rem; margin-top: 2px;
+    font-variant-numeric: tabular-nums; }
   .ach-item.is-linked, .ach-item:hover { background: var(--card); color: var(--accent); }
   .ach-scans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; align-content: start; }
   .ach-scan { border: 2px solid var(--border); border-radius: 8px; overflow: hidden; padding: 0;
