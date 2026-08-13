@@ -4,6 +4,7 @@ export function initProjectModal(): void {
   const dialog = document.querySelector<HTMLDialogElement>('[data-project-modal]');
   if (!dialog) return;
   const content = dialog.querySelector<HTMLElement>('[data-pm-content]')!;
+  let pushed = false; // 이 모듈이 현재 해시 히스토리 엔트리를 push했는지 여부
 
   const open = (slug: string, push: boolean) => {
     const tpl = document.querySelector<HTMLTemplateElement>(`[data-project-tpl="${slug}"]`);
@@ -11,13 +12,26 @@ export function initProjectModal(): void {
     content.replaceChildren(tpl.content.cloneNode(true));
     if (!dialog.open) dialog.showModal();
     document.body.style.overflow = 'hidden';
-    if (push && location.hash !== HASH_PREFIX + slug)
-      history.pushState(null, '', HASH_PREFIX + slug);
+    if (push) {
+      if (location.hash !== HASH_PREFIX + slug) {
+        history.pushState(null, '', HASH_PREFIX + slug);
+        pushed = true;
+      }
+    } else {
+      pushed = false;
+    }
   };
   const close = (back: boolean) => {
     if (dialog.open) dialog.close();
     document.body.style.overflow = '';
-    if (back && location.hash.startsWith(HASH_PREFIX)) history.back();
+    if (back && location.hash.startsWith(HASH_PREFIX)) {
+      if (pushed) {
+        history.back(); // popstate가 pushed를 리셋하며 동기화
+      } else {
+        // 직접 진입: 뒤로가기 대신 해시만 제거 (사이트 이탈 방지)
+        history.replaceState(null, '', location.pathname + location.search);
+      }
+    }
   };
 
   // 카드 클릭 / 히어로 링의 open-project 이벤트
@@ -32,7 +46,7 @@ export function initProjectModal(): void {
   dialog.addEventListener('cancel', (e) => { e.preventDefault(); close(true); });
   window.addEventListener('popstate', () => {
     if (location.hash.startsWith(HASH_PREFIX)) open(location.hash.slice(HASH_PREFIX.length), false);
-    else close(false);
+    else { pushed = false; close(false); }
   });
 
   // 해시 포함 URL 직접 진입
