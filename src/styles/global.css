@@ -86,6 +86,10 @@ button { font: inherit; cursor: pointer; }
   .project-grid > [data-reveal-item]:nth-child(n):not(.reveal-done) { transition-delay: 0s; }
 }
 
+/* 중제목 글자 커서 회피 */
+.section-title .ch { display: inline-block; transition: transform 0.18s ease-out; will-change: transform; }
+@media (prefers-reduced-motion: reduce) { .section-title .ch { transition: none; } }
+
 /* 링크 hover 색상 */
 a:not(.btn):not(.logo):hover { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) {

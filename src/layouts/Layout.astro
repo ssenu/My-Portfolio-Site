@@ -28,7 +28,9 @@ const site = (await getEntry('site', 'main'))!.data;
     <main><slot /></main>
     <script>
       import { initReveal } from '../scripts/reveal';
+      import { splitAndRepel } from '../scripts/charRepel';
       initReveal();
+      document.querySelectorAll<HTMLElement>('.section-title').forEach(splitAndRepel);
     </script>
     <footer class="footer">
       <p>© 2026 {site.name[lang]} · {site.devName}</p>
