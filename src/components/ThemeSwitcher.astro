@@ -8,14 +8,15 @@ const themes = [
   { name: 'cream', color: '#f7f2e7' },
   { name: 'sky', color: '#eef4fa' },
   { name: 'violet', color: '#f4effa' },
+  { name: 'grape', color: '#2a1b3d' },
   { name: 'dark', color: '#111214' },
   { name: 'forest', color: '#0f1a14' },
 ];
 ---
 <div class="theme-switcher" data-theme-switcher>
   <div class="dots" role="group" aria-label={t(lang, 'theme.label')}>
-    {themes.map((th, i) => (
-      <button class="dot" data-theme-choice={th.name} style={`--dot: ${th.color}; --i: ${i}`}
+    {themes.map((th) => (
+      <button class="dot" data-theme-choice={th.name} style={`--dot: ${th.color}`}
         tabindex="-1" aria-label={`${t(lang, 'theme.label')}: ${th.name}`} />
     ))}
   </div>
@@ -31,25 +32,26 @@ const themes = [
   </button>
 </div>
 <style>
-  .theme-switcher { position: fixed; right: 20px; bottom: 20px; z-index: 60;
-    display: flex; flex-direction: column; align-items: center; gap: 10px; }
-  .palette-btn { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+  .theme-switcher { position: fixed; right: 24px; bottom: 24px; z-index: 60;
+    width: 48px; height: 48px; }
+  .palette-btn { position: relative; z-index: 1; width: 48px; height: 48px; border-radius: 50%;
+    display: grid; place-items: center;
     background: var(--card); color: var(--text); border: 1px solid var(--border);
     box-shadow: var(--shadow); transition: transform 0.15s; }
   .palette-btn:hover { transform: scale(1.08) rotate(-10deg); }
-  .dots { display: flex; flex-direction: column-reverse; gap: 8px; }
-  .dot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border);
+  .dots { position: absolute; inset: 0; pointer-events: none; }
+  .dot { position: absolute; left: 50%; top: 50%; width: 26px; height: 26px;
+    margin: -13px 0 0 -13px; border-radius: 50%; border: 2px solid var(--border);
     background: var(--dot); box-shadow: var(--shadow);
-    opacity: 0; transform: translateY(calc(12px + var(--i) * 4px)) scale(0.4);
-    pointer-events: none;
-    transition: transform 0.25s ease, opacity 0.2s ease;
-    transition-delay: calc(var(--i) * 0.03s); }
-  .theme-switcher.open .dot { opacity: 1; transform: none; pointer-events: auto; }
-  .dot:hover { transform: scale(1.2) !important; }
-  .dot.active { border-color: var(--accent); }
+    opacity: 0; transform: translate(0, 0) scale(0.4); pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1), opacity 0.2s ease;
+    transition-delay: calc(var(--i, 0) * 0.035s); }
+  .theme-switcher.open .dot:not(.active) { opacity: 1; pointer-events: auto;
+    transform: translate(var(--tx, 0), var(--ty, 0)) scale(var(--s, 1)); }
+  .dot:hover { --s: 1.25; transition-delay: 0s; }
+  .dot.active { display: none; }
   @media (prefers-reduced-motion: reduce) {
     .dot, .palette-btn { transition: none; }
-    .dot { transform: none; }
   }
 </style>
 <script>
@@ -57,13 +59,35 @@ const themes = [
   if (root) {
     const toggle = root.querySelector<HTMLButtonElement>('[data-palette-toggle]')!;
     const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-theme-choice]')];
+    const RADIUS = 74;
+
+    // 현재 테마를 제외한 점들을 버튼 주위(위→왼쪽) 부채꼴로 배치
+    const layout = () => {
+      const cur = document.documentElement.dataset.theme ?? 'light';
+      const visible = dots.filter((d) => {
+        const active = d.dataset.themeChoice === cur;
+        d.classList.toggle('active', active);
+        return !active;
+      });
+      const start = 90, spread = 110; // 90°(위) → 200°(왼쪽 약간 아래)
+      visible.forEach((d, i) => {
+        const a = ((start + (spread / (visible.length - 1)) * i) * Math.PI) / 180;
+        d.style.setProperty('--tx', `${Math.cos(a) * RADIUS}px`);
+        d.style.setProperty('--ty', `${-Math.sin(a) * RADIUS}px`);
+        d.style.setProperty('--i', `${i}`);
+      });
+    };
 
     const setOpen = (open: boolean) => {
       root.classList.toggle('open', open);
       toggle.setAttribute('aria-expanded', String(open));
-      dots.forEach((d) => (d.tabIndex = open ? 0 : -1));
+      dots.forEach((d) => (d.tabIndex = open && !d.classList.contains('active') ? 0 : -1));
     };
-    toggle.addEventListener('click', () => setOpen(!root.classList.contains('open')));
+    toggle.addEventListener('click', () => {
+      const willOpen = !root.classList.contains('open');
+      if (willOpen) layout();
+      setOpen(willOpen);
+    });
     document.addEventListener('click', (e) => {
       if (!root.contains(e.target as Node)) setOpen(false);
     });
@@ -71,10 +95,6 @@ const themes = [
       if (e.key === 'Escape') setOpen(false);
     });
 
-    const mark = () => {
-      const cur = document.documentElement.dataset.theme ?? 'light';
-      dots.forEach((b) => b.classList.toggle('active', b.dataset.themeChoice === cur));
-    };
     dots.forEach((b) => b.addEventListener('click', () => {
       const name = b.dataset.themeChoice!;
       if (name === 'light') {
@@ -84,9 +104,9 @@ const themes = [
         document.documentElement.dataset.theme = name;
         localStorage.setItem('theme', name);
       }
-      mark();
       setOpen(false);
+      layout();
     }));
-    mark();
+    layout();
   }
 </script>
