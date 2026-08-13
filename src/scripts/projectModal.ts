@@ -7,8 +7,9 @@ export function initProjectModal(): void {
   let pushed = false; // 이 모듈이 현재 해시 히스토리 엔트리를 push했는지 여부
 
   const open = (slug: string, push: boolean) => {
+    if (!/^[A-Za-z0-9_-]+$/.test(slug)) { close(false); return; }
     const tpl = document.querySelector<HTMLTemplateElement>(`[data-project-tpl="${slug}"]`);
-    if (!tpl) return;
+    if (!tpl) { close(false); return; }
     content.replaceChildren(tpl.content.cloneNode(true));
     if (!dialog.open) dialog.showModal();
     document.body.style.overflow = 'hidden';
@@ -42,7 +43,13 @@ export function initProjectModal(): void {
 
   // 닫기: ×, 배경, ESC(cancel), 뒤로가기(popstate)
   dialog.querySelector('[data-pm-close]')!.addEventListener('click', () => close(true));
-  dialog.addEventListener('click', (e) => { if (e.target === dialog) close(true); });
+  dialog.addEventListener('click', (e) => {
+    if (e.target !== dialog) return;
+    // 패딩/스크롤바 클릭(rect 내부)은 무시하고, 진짜 배경(백드롭) 클릭만 닫기
+    const r = dialog.getBoundingClientRect();
+    const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    if (!inside) close(true);
+  });
   dialog.addEventListener('cancel', (e) => { e.preventDefault(); close(true); });
   window.addEventListener('popstate', () => {
     if (location.hash.startsWith(HASH_PREFIX)) open(location.hash.slice(HASH_PREFIX.length), false);
