@@ -28,7 +28,7 @@ npm run preview # 빌드 결과 미리보기
 git pull
 docker compose up -d --build
 ```
-포트 8080에서 서비스된다 (컨테이너 내부 80 → 호스트 8080).
+호스트 포트는 `.env`의 `HOST_PORT` 값을 따른다 (기본 8001, 컨테이너 내부는 항상 80). 다른 포트로 열려면 `.env`를 수정하거나 환경변수로 덮어쓴다: `HOST_PORT=9000 docker compose up -d --build`.
 
 ## 콘텐츠 추가
 프로젝트/자격증/수상/교육/소개글 추가·수정 규칙은 [CLAUDE.md](./CLAUDE.md) 참조.

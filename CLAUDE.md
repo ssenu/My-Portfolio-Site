@@ -27,4 +27,4 @@
 - 새 의존성 추가 금지.
 
 ## 배포 (RPi)
-git pull 후 `docker compose up -d --build`. 포트 8080.
+git pull 후 `docker compose up -d --build`. 호스트 포트는 `.env`의 `HOST_PORT`(기본 8001)로 결정되며, 환경변수 `HOST_PORT`로 덮어쓸 수 있다.

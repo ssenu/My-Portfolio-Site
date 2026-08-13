@@ -2,5 +2,5 @@ services:
   portfolio:
     build: .
     ports:
-      - "8080:80"
+      - "${HOST_PORT:-8001}:80"
     restart: unless-stopped

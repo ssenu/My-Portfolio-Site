@@ -1,3 +1,6 @@
 node_modules/
 dist/
 .astro/
+
+# 전역 gitignore(.env.*)를 무시하고 예시 파일은 커밋
+!.env.example
