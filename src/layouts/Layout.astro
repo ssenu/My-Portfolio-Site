@@ -26,6 +26,10 @@ const site = (await getEntry('site', 'main'))!.data;
   <body>
     <Header lang={lang} />
     <main><slot /></main>
+    <script>
+      import { initReveal } from '../scripts/reveal';
+      initReveal();
+    </script>
     <footer class="footer">
       <p>© 2026 {site.name[lang]} · {site.devName}</p>
     </footer>
