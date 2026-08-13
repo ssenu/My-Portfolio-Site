@@ -41,3 +41,8 @@ const featured = (await getCollection('projects', (p) => p.data.featured))
   .scroll-hint { margin-top: 40px; color: var(--muted); text-decoration: none; font-size: 0.9rem; }
   @media (max-width: 640px) { .ring-card { width: 130px; height: 180px; margin: -90px 0 0 -65px; } }
 </style>
+<script>
+  import { initHeroRing } from '../scripts/heroRing';
+  const root = document.querySelector<HTMLElement>('[data-ring]');
+  if (root) initHeroRing(root);
+</script>
