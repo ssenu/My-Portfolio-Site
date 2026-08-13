@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from './Hero.astro';
 import Contact from './Contact.astro';
+import ThemeSwitcher from './ThemeSwitcher.astro';
 import { getEntry } from 'astro:content';
 import type { Lang } from '../i18n/ui';
 interface Props { lang: Lang }
@@ -15,5 +16,5 @@ const title = `Portfolio ${site.name[lang]}`;
   <!-- Task 9: <Achievements lang={lang} /> -->
   <!-- Task 11: <Projects lang={lang} /> / <ProjectModal lang={lang} /> -->
   <Contact lang={lang} />
-  <!-- Task 7: <ThemeSwitcher lang={lang} /> -->
+  <ThemeSwitcher lang={lang} />
 </Layout>
