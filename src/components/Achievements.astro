@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import type { Lang } from '../i18n/ui';
+import { t } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const awards = await getCollection('awards');
+const programs = await getCollection('programs');
+const scans = [...awards, ...programs].filter((a) => a.data.scan);
+---
+<section id="achievements" class="section" data-reveal data-achievements>
+  <h2 class="section-title">{t(lang, 'section.achievements')}</h2>
+  <div class="ach-grid">
+    <div class="ach-lists">
+      <h3>{t(lang, 'section.awards')}</h3>
+      <ul>
+        {awards.map((a) => (
+          <li class="ach-item" data-id={a.data.id}>
+            {a.data.name[lang]} <span class="period">{a.data.period}</span>
+          </li>
+        ))}
+      </ul>
+      <h3>{t(lang, 'section.programs')}</h3>
+      <ul>
+        {programs.map((a) => (
+          <li class="ach-item" data-id={a.data.id}>
+            {a.data.name[lang]} <span class="period">{a.data.period}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="ach-scans">
+      {scans.map((a) => (
+        <button class="ach-scan" data-id={a.data.id} data-lightbox={a.data.scan}
+          aria-label={a.data.name[lang]}>
+          <img src={a.data.scan} alt={a.data.name[lang]} loading="lazy" />
+        </button>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  .ach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .ach-lists h3 { margin: 24px 0 12px; }
+  .ach-lists ul { list-style: none; padding: 0; }
+  .ach-item { padding: 8px 10px; border-radius: 8px; transition: background 0.15s, color 0.15s; }
+  .period { color: var(--muted); font-size: 0.85rem; margin-left: 8px; }
+  .ach-item.is-linked, .ach-item:hover { background: var(--card); color: var(--accent); }
+  .ach-scans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; align-content: start; }
+  .ach-scan { border: 2px solid var(--border); border-radius: 8px; overflow: hidden; padding: 0;
+    background: var(--card); transition: transform 0.15s, border-color 0.15s, opacity 0.15s; }
+  .ach-scan img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+  .ach-scan.is-linked, .ach-scan:hover { transform: scale(1.06); border-color: var(--accent); }
+  .ach-scans:has(.is-linked) .ach-scan:not(.is-linked) { opacity: 0.45; }
+  @media (max-width: 720px) { .ach-grid { grid-template-columns: 1fr; } }
+</style>
+<script>
+  import { initAchievementLink } from '../scripts/achievementLink';
+  const section = document.querySelector<HTMLElement>('[data-achievements]');
+  if (section) initAchievementLink(section);
+</script>
