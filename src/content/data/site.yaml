@@ -5,6 +5,10 @@ main:
   github: "https://github.com/cwhappy"
   slogan: ["I Build Things", "Learn from them", "Refine My Story"]
   about:
-    ko: "어떤 목표로 개발하고 있는지, 무엇을 배웠는지, 앞으로 무엇을 배우고 싶은지를 담은 소개글입니다."
-    en: "An introduction covering my goals as a developer, what I've learned, and what I want to learn next."
+    ko: |-
+      안녕하세요! 박찬우입니다.
+      명지전문대학 정보통신공학과에 3학년으로 재학 중이며 네트워크, 임베디드, 풀스택 웹 등 다양한 분야를 배워나가고 있습니다. 아래 버튼을 통해 제 스토리를 소개합니다.
+    en: |-
+      Hello! I'm Park Chanwoo.
+      I'm a third-year student in Information & Communication Engineering at Myongji College, learning across networking, embedded systems, and full-stack web development. The buttons below tell my story.
   profileImage: "/images/profile/me.svg"

@@ -14,8 +14,12 @@ const site = (await getEntry('site', 'main'))!.data;
       <p class="slogan">{site.slogan.map((line) => <span>{line}</span>)}</p>
       <p class="bio">{site.about[lang]}</p>
       <div class="actions">
-        <a class="btn" href={site.github} target="_blank" rel="noopener">{t(lang, 'about.github')}</a>
-        <a class="btn" href="#projects">{t(lang, 'about.projects')}</a>
+        <a class="btn" href={site.github} target="_blank" rel="noopener">
+          {t(lang, 'about.github')}<span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="btn" href="#projects">
+          {t(lang, 'about.projects')}<span class="arrow" aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
   </div>
@@ -26,9 +30,15 @@ const site = (await getEntry('site', 'main'))!.data;
   .slogan { display: flex; flex-direction: column; font-size: 1.6rem; font-weight: 700; margin-bottom: 20px; }
   .bio { color: var(--muted); white-space: pre-line; margin-bottom: 28px; }
   .actions { display: flex; gap: 12px; }
-  .btn { display: inline-block; padding: 10px 24px; border-radius: 8px; text-decoration: none;
-    background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow);
-    transition: transform 0.15s, border-color 0.15s; }
+  .btn { display: inline-flex; align-items: center; padding: 10px 24px; border-radius: 8px;
+    text-decoration: none; background: var(--card); border: 1px solid var(--border);
+    box-shadow: var(--shadow); transition: transform 0.15s, border-color 0.15s; }
   .btn:hover { transform: translateY(-2px); border-color: var(--accent); }
+  /* hover 시 오른쪽으로 넓어지며 화살표 등장 (옆 버튼이 자연스럽게 밀려남) */
+  .btn .arrow { display: inline-block; max-width: 0; opacity: 0; overflow: hidden;
+    margin-left: 0; transform: translateX(-6px);
+    transition: max-width 0.25s ease, opacity 0.2s ease, margin-left 0.25s ease, transform 0.25s ease; }
+  .btn:hover .arrow { max-width: 1.4em; opacity: 1; margin-left: 10px; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .btn .arrow { transition: none; } }
   @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } .photo { max-width: 260px; margin: 0 auto; } }
 </style>
