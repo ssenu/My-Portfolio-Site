@@ -5,6 +5,7 @@ import About from './About.astro';
 import Certifications from './Certifications.astro';
 import Achievements from './Achievements.astro';
 import Contact from './Contact.astro';
+import Lightbox from './Lightbox.astro';
 import ThemeSwitcher from './ThemeSwitcher.astro';
 import { getEntry } from 'astro:content';
 import type { Lang } from '../i18n/ui';
@@ -20,5 +21,6 @@ const title = `Portfolio ${site.name[lang]}`;
   <Achievements lang={lang} />
   <!-- Task 11: <Projects lang={lang} /> / <ProjectModal lang={lang} /> -->
   <Contact lang={lang} />
+  <Lightbox lang={lang} />
   <ThemeSwitcher lang={lang} />
 </Layout>
