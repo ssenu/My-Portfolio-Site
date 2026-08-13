@@ -48,6 +48,9 @@ export function initHeroRing(root: HTMLElement): void {
       state = { ...state, velocity: lastDx * DEG_PER_PX * 60 }; // 놓는 순간 속도 이어받기
     }
   });
+  root.addEventListener('pointercancel', () => {
+    dragging = false; root.classList.remove('dragging');
+  });
   root.addEventListener('wheel', (e) => {
     state = addImpulse(state, e.deltaY * WHEEL_IMPULSE);
   }, { passive: true });
