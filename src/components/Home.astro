@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from './Hero.astro';
+import About from './About.astro';
+import Certifications from './Certifications.astro';
 import Contact from './Contact.astro';
 import ThemeSwitcher from './ThemeSwitcher.astro';
 import { getEntry } from 'astro:content';
@@ -12,7 +14,8 @@ const title = `Portfolio ${site.name[lang]}`;
 ---
 <Layout lang={lang} title={title} description={site.about[lang].slice(0, 150)}>
   <Hero lang={lang} />
-  <!-- Task 8: <About lang={lang} /> / <Certifications lang={lang} /> -->
+  <About lang={lang} />
+  <Certifications lang={lang} />
   <!-- Task 9: <Achievements lang={lang} /> -->
   <!-- Task 11: <Projects lang={lang} /> / <ProjectModal lang={lang} /> -->
   <Contact lang={lang} />

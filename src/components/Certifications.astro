@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import type { Lang } from '../i18n/ui';
+import { t } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const certs = await getCollection('certifications');
+---
+<section id="certifications" class="section" data-reveal>
+  <h2 class="section-title">{t(lang, 'section.certifications')}</h2>
+  <ul class="cert-list">
+    {certs.map((c) => (
+      <li>
+        <span class="issuer">{c.data.issuer[lang]}</span>
+        <span class="name">{c.data.name[lang]}</span>
+        <span class="date">{c.data.date}</span>
+      </li>
+    ))}
+  </ul>
+</section>
+<style>
+  .cert-list { list-style: none; padding: 0; max-width: 640px; margin: 0 auto; }
+  .cert-list li { display: flex; gap: 16px; justify-content: space-between; padding: 12px 8px;
+    border-bottom: 1px solid var(--border); }
+  .issuer { color: var(--muted); }
+  .name { flex: 1; }
+  .date { color: var(--muted); font-variant-numeric: tabular-nums; }
+  @media (max-width: 560px) { .cert-list li { flex-wrap: wrap; } }
+</style>

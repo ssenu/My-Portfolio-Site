@@ -1,0 +1,34 @@
+---
+import { getEntry } from 'astro:content';
+import type { Lang } from '../i18n/ui';
+import { t } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const site = (await getEntry('site', 'main'))!.data;
+---
+<section id="about" class="section" data-reveal>
+  <h2 class="section-title">{t(lang, 'section.about')}</h2>
+  <div class="about-grid">
+    <img class="photo" src={site.profileImage} alt={site.name[lang]} loading="lazy" />
+    <div class="intro">
+      <p class="slogan">{site.slogan.map((line) => <span>{line}</span>)}</p>
+      <p class="bio">{site.about[lang]}</p>
+      <div class="actions">
+        <a class="btn" href={site.github} target="_blank" rel="noopener">{t(lang, 'about.github')}</a>
+        <a class="btn" href="#projects">{t(lang, 'about.projects')}</a>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .about-grid { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: center; }
+  .photo { width: 100%; border-radius: 12px; box-shadow: var(--shadow); }
+  .slogan { display: flex; flex-direction: column; font-size: 1.6rem; font-weight: 700; margin-bottom: 20px; }
+  .bio { color: var(--muted); white-space: pre-line; margin-bottom: 28px; }
+  .actions { display: flex; gap: 12px; }
+  .btn { display: inline-block; padding: 10px 24px; border-radius: 8px; text-decoration: none;
+    background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow);
+    transition: transform 0.15s, border-color 0.15s; }
+  .btn:hover { transform: translateY(-2px); border-color: var(--accent); }
+  @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } .photo { max-width: 260px; margin: 0 auto; } }
+</style>
