@@ -45,11 +45,11 @@ const title = `Portfolio ${site.name[lang]}`;
   .hero.revealed .ring-card { opacity: 1; transition: opacity 0.7s ease; }
   .hero:not(.revealed) .ring-card img { transform: translateY(24px); }
   .hero.revealed .ring-card img { transform: none; transition: transform 0.7s ease; }
-  .hero.revealed .ring-card:nth-child(2), .hero.revealed .ring-card:nth-child(2) img { transition-delay: 0.18s; }
-  .hero.revealed .ring-card:nth-child(3), .hero.revealed .ring-card:nth-child(3) img { transition-delay: 0.36s; }
-  .hero.revealed .ring-card:nth-child(4), .hero.revealed .ring-card:nth-child(4) img { transition-delay: 0.54s; }
-  .hero.revealed .ring-card:nth-child(5), .hero.revealed .ring-card:nth-child(5) img { transition-delay: 0.72s; }
-  .hero.revealed .ring-card:nth-child(n+6), .hero.revealed .ring-card:nth-child(n+6) img { transition-delay: 0.9s; }
+  .hero.revealed .ring-card:nth-last-child(2), .hero.revealed .ring-card:nth-last-child(2) img { transition-delay: 0.18s; }
+  .hero.revealed .ring-card:nth-last-child(3), .hero.revealed .ring-card:nth-last-child(3) img { transition-delay: 0.36s; }
+  .hero.revealed .ring-card:nth-last-child(4), .hero.revealed .ring-card:nth-last-child(4) img { transition-delay: 0.54s; }
+  .hero.revealed .ring-card:nth-last-child(5), .hero.revealed .ring-card:nth-last-child(5) img { transition-delay: 0.72s; }
+  .hero.revealed .ring-card:nth-last-child(n+6), .hero.revealed .ring-card:nth-last-child(n+6) img { transition-delay: 0.9s; }
 
   h1 { font-size: clamp(2rem, 5vw, 3rem); margin-top: 24px; }
   .hero-title .ch { display: inline-block; transition: transform 0.18s ease-out; will-change: transform; }
