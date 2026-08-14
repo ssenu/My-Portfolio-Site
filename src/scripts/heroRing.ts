@@ -96,12 +96,15 @@ export function initHeroRing(root: HTMLElement): void {
 
     cards.forEach((c, i) => {
       const o = offsets[i];
-      // 2) 이웃 전파: 밀린 카드가 옆 장·그 옆 장을 같은 방향으로 밀어내 겹침 방지
-      let ta = 0, ty = 0;
-      for (let k = -2; k <= 2; k++) {
-        const w = SPREAD[Math.abs(k)];
-        const s = raw[(i + k + n) % n];
-        ta += s.a * w; ty += s.y * w;
+      // 2) 이웃 전파: 좌우(각도) 밀림이 자기 쪽으로 향할 때만 전달 — 세로 밀림은 전파 안 함
+      let ta = raw[i].a;
+      const ty = raw[i].y;
+      for (let k = 1; k <= 2; k++) {
+        const w = SPREAD[k];
+        const back = raw[(i - k + n) % n];  // 뒤쪽 이웃이 +방향(나를 향해) 밀렸을 때
+        if (back.a > 0) ta += back.a * w;
+        const fwd = raw[(i + k) % n];       // 앞쪽 이웃이 -방향(나를 향해) 밀렸을 때
+        if (fwd.a < 0) ta += fwd.a * w;
       }
       ta = clamp(ta, REPEL_MAX_DEG);
       o.a += (ta - o.a) * REPEL_EASE;
