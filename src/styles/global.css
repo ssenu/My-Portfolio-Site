@@ -2,37 +2,51 @@
 :root {
   --bg: #fafafa; --text: #141414; --muted: #6b6b6b;
   --card: #ffffff; --accent: #2563eb; --border: #e5e5e5;
-  --shadow: 0 4px 16px rgb(0 0 0 / 0.08);
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.10), 0 6px 14px rgb(0 0 0 / 0.10),
+    0 22px 44px -12px rgb(0 0 0 / 0.16);
+  --noise-o: 0.05;
 }
 [data-theme='cream'] {
   --bg: #f7f2e7; --text: #2b2416; --muted: #7a6f58;
   --card: #fffaf0; --accent: #c2410c; --border: #e8dfc9;
-  --shadow: 0 4px 16px rgb(80 60 20 / 0.1);
+  --shadow: 0 1px 2px rgb(80 60 20 / 0.12), 0 6px 14px rgb(80 60 20 / 0.11),
+    0 22px 44px -12px rgb(80 60 20 / 0.18);
 }
 [data-theme='sky'] {
   --bg: #eef4fa; --text: #0f2436; --muted: #5b7186;
   --card: #ffffff; --accent: #0369a1; --border: #d8e4ef;
-  --shadow: 0 4px 16px rgb(20 60 100 / 0.1);
+  --shadow: 0 1px 2px rgb(20 60 100 / 0.12), 0 6px 14px rgb(20 60 100 / 0.11),
+    0 22px 44px -12px rgb(20 60 100 / 0.18);
 }
 [data-theme='violet'] {
   --bg: #f4effa; --text: #241a35; --muted: #6d5f85;
   --card: #fdfbff; --accent: #7c3aed; --border: #e2d8f0;
-  --shadow: 0 4px 16px rgb(80 40 140 / 0.12);
+  --shadow: 0 1px 2px rgb(80 40 140 / 0.13), 0 6px 14px rgb(80 40 140 / 0.12),
+    0 22px 44px -12px rgb(80 40 140 / 0.2);
 }
 [data-theme='grape'] {
   --bg: #1c1128; --text: #ece4f7; --muted: #a394be;
   --card: #2a1b3d; --accent: #b57bff; --border: #3c2a54;
-  --shadow: 0 4px 16px rgb(0 0 0 / 0.5);
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.5), 0 8px 18px rgb(0 0 0 / 0.45),
+    0 26px 52px -12px rgb(0 0 0 / 0.6),
+    0 0 0 1px color-mix(in srgb, var(--accent) 14%, transparent);
+  --noise-o: 0.07;
 }
 [data-theme='dark'] {
   --bg: #111214; --text: #ececec; --muted: #9a9a9a;
   --card: #1b1d21; --accent: #60a5fa; --border: #2a2d33;
-  --shadow: 0 4px 16px rgb(0 0 0 / 0.5);
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.5), 0 8px 18px rgb(0 0 0 / 0.45),
+    0 26px 52px -12px rgb(0 0 0 / 0.6),
+    0 0 0 1px color-mix(in srgb, var(--accent) 14%, transparent);
+  --noise-o: 0.07;
 }
 [data-theme='forest'] {
   --bg: #0f1a14; --text: #e6efe8; --muted: #8faa97;
   --card: #16241c; --accent: #4ade80; --border: #23392c;
-  --shadow: 0 4px 16px rgb(0 0 0 / 0.5);
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.5), 0 8px 18px rgb(0 0 0 / 0.45),
+    0 26px 52px -12px rgb(0 0 0 / 0.6),
+    0 0 0 1px color-mix(in srgb, var(--accent) 14%, transparent);
+  --noise-o: 0.07;
 }
 
 /* ── 리셋·베이스 ───────────────────── */
@@ -42,6 +56,12 @@ body {
   background: var(--bg); color: var(--text);
   font-family: 'Pretendard Variable', Pretendard, -apple-system, 'Segoe UI', 'Malgun Gothic', sans-serif;
   line-height: 1.6; transition: background-color 0.4s, color 0.4s;
+}
+/* 미세 노이즈 텍스처: 단색 배경에 종이 질감 (외부 리소스 없음, 클릭 통과) */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 90; pointer-events: none;
+  opacity: var(--noise-o);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 img { max-width: 100%; display: block; }
 a { color: inherit; }
