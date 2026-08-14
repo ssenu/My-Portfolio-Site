@@ -3,7 +3,7 @@ title: { ko: "웨더 스코프", en: "Weather Scope" }
 summary: { ko: "기상청 API 기반 날씨 대시보드", en: "A weather dashboard powered by public APIs" }
 thumbnail: /images/projects/weather-scope/thumb.svg
 images: []
-github: https://github.com/cwhappy/weather-scope
+github: https://github.com/ssenu/weather-scope
 tech: [Vue, Chart.js, Express]
 period: "2025.06 ~ 2025.07"
 featured: true

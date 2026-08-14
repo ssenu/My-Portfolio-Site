@@ -3,7 +3,7 @@ title: { ko: "챗 릴레이", en: "Chat Relay" }
 summary: { ko: "웹소켓 실시간 채팅 서비스", en: "A WebSocket real-time chat service" }
 thumbnail: /images/projects/chat-relay/thumb.svg
 images: []
-github: https://github.com/cwhappy/chat-relay
+github: https://github.com/ssenu/chat-relay
 tech: [Socket.io, Redis, Express]
 period: "2026.01 ~ 2026.02"
 featured: false

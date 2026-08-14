@@ -3,7 +3,7 @@ title: { ko: "알고 비즈", en: "Algo Viz" }
 summary: { ko: "정렬·탐색 알고리즘 시각화 도구", en: "A sorting/search algorithm visualizer" }
 thumbnail: /images/projects/algo-viz/thumb.svg
 images: []
-github: https://github.com/cwhappy/algo-viz
+github: https://github.com/ssenu/algo-viz
 tech: [Svelte, Canvas API]
 period: "2025.08 ~ 2025.09"
 featured: true

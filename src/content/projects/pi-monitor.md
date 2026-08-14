@@ -3,7 +3,7 @@ title: { ko: "파이 모니터", en: "Pi Monitor" }
 summary: { ko: "라즈베리파이 서버 모니터링 대시보드", en: "A Raspberry Pi server monitoring dashboard" }
 thumbnail: /images/projects/pi-monitor/thumb.svg
 images: []
-github: https://github.com/cwhappy/pi-monitor
+github: https://github.com/ssenu/pi-monitor
 tech: [Node.js, WebSocket, Docker]
 period: "2025.10 ~ 2025.12"
 featured: true

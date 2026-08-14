@@ -3,7 +3,7 @@ title: { ko: "레시피 레이더", en: "Recipe Radar" }
 summary: { ko: "재료 기반 레시피 검색 앱", en: "An ingredient-based recipe finder" }
 thumbnail: /images/projects/recipe-radar/thumb.svg
 images: []
-github: https://github.com/cwhappy/recipe-radar
+github: https://github.com/ssenu/recipe-radar
 tech: [Next.js, Tailwind CSS]
 period: "2026.03 ~ 2026.04"
 featured: false

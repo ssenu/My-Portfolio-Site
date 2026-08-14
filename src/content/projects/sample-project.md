@@ -3,7 +3,7 @@ title: { ko: "샘플 프로젝트", en: "Sample Project" }
 summary: { ko: "포트폴리오 파이프라인 검증용 샘플입니다.", en: "A sample to validate the portfolio pipeline." }
 thumbnail: /images/projects/sample-project/thumb.svg
 images: []
-github: https://github.com/cwhappy/sample-project
+github: https://github.com/ssenu/sample-project
 tech: [Astro, TypeScript]
 period: "2026.01 ~ 2026.02"
 featured: true

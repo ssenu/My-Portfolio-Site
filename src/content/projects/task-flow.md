@@ -3,7 +3,7 @@ title: { ko: "태스크 플로우", en: "Task Flow" }
 summary: { ko: "칸반 보드 기반 할 일 관리 웹앱", en: "A kanban-style task management web app" }
 thumbnail: /images/projects/task-flow/thumb.svg
 images: []
-github: https://github.com/cwhappy/task-flow
+github: https://github.com/ssenu/task-flow
 tech: [React, TypeScript, Zustand]
 period: "2025.03 ~ 2025.05"
 featured: true

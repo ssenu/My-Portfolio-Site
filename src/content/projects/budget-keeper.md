@@ -3,7 +3,7 @@ title: { ko: "버짓 키퍼", en: "Budget Keeper" }
 summary: { ko: "가계부·지출 분석 PWA", en: "A budgeting and expense-analysis PWA" }
 thumbnail: /images/projects/budget-keeper/thumb.svg
 images: []
-github: https://github.com/cwhappy/budget-keeper
+github: https://github.com/ssenu/budget-keeper
 tech: [Astro, IndexedDB, PWA]
 period: "2026.05 ~ 2026.06"
 featured: false
