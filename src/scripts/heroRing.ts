@@ -72,25 +72,38 @@ export function initHeroRing(root: HTMLElement): void {
   const offsets = cards.map(() => ({ y: 0, a: 0, active: false }));
   const clamp = (v: number, lim: number) => Math.max(-lim, Math.min(lim, v));
 
+  const SPREAD = [1, 0.5, 0.22]; // 전파 가중치: 자기 자신, 옆 장, 그 옆 장
+
   const applyRepel = () => {
+    // 1) 카드별 원시 밀림량 계산
+    const raw = cards.map((c, i) => {
+      if (dragging || mx <= -1e3) return { a: 0, y: 0 };
+      const r = c.getBoundingClientRect();
+      const dx = r.left + r.width / 2 - mx;
+      const dy = r.top + r.height / 2 - my;
+      const d = Math.hypot(dx, dy);
+      if (d >= REPEL_RADIUS || d <= 0) return { a: 0, y: 0 };
+      const f = ((REPEL_RADIUS - d) / REPEL_RADIUS) * REPEL_PUSH;
+      // 수평 밀림은 링 궤도 위 각도 오프셋으로 변환 (화면 dx/dθ = r·cosθ 보정)
+      const theta = ((state.angle + (360 / n) * i) * Math.PI) / 180;
+      const cos = Math.cos(theta);
+      const cosC = (cos < 0 ? -1 : 1) * Math.max(Math.abs(cos), 0.35);
+      return {
+        a: clamp((((dx / d) * f) / (radius * cosC)) * (180 / Math.PI), REPEL_MAX_DEG),
+        y: (dy / d) * f,
+      };
+    });
+
     cards.forEach((c, i) => {
       const o = offsets[i];
-      let ty = 0, ta = 0;
-      if (!dragging && mx > -1e3) {
-        const r = c.getBoundingClientRect();
-        const dx = r.left + r.width / 2 - mx;
-        const dy = r.top + r.height / 2 - my;
-        const d = Math.hypot(dx, dy);
-        if (d < REPEL_RADIUS && d > 0) {
-          const f = ((REPEL_RADIUS - d) / REPEL_RADIUS) * REPEL_PUSH;
-          // 수평 밀림은 링 궤도 위 각도 오프셋으로 변환 (화면 dx/dθ = r·cosθ 보정)
-          const theta = ((state.angle + (360 / n) * i) * Math.PI) / 180;
-          const cos = Math.cos(theta);
-          const cosC = (cos < 0 ? -1 : 1) * Math.max(Math.abs(cos), 0.35);
-          ta = clamp((((dx / d) * f) / (radius * cosC)) * (180 / Math.PI), REPEL_MAX_DEG);
-          ty = (dy / d) * f;
-        }
+      // 2) 이웃 전파: 밀린 카드가 옆 장·그 옆 장을 같은 방향으로 밀어내 겹침 방지
+      let ta = 0, ty = 0;
+      for (let k = -2; k <= 2; k++) {
+        const w = SPREAD[Math.abs(k)];
+        const s = raw[(i + k + n) % n];
+        ta += s.a * w; ty += s.y * w;
       }
+      ta = clamp(ta, REPEL_MAX_DEG);
       o.a += (ta - o.a) * REPEL_EASE;
       o.y += (ty - o.y) * REPEL_EASE;
       const moving = Math.abs(o.a) > 0.02 || Math.abs(o.y) > 0.05;
