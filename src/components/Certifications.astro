@@ -25,5 +25,11 @@ const certs = await getCollection('certifications');
   .issuer { color: var(--muted); }
   .name { flex: 1; }
   .date { color: var(--muted); font-variant-numeric: tabular-nums; }
-  @media (max-width: 560px) { .cert-list li { flex-wrap: wrap; } }
+  /* 모바일: 자격증명 한 줄, 그 아래 발급기관·날짜를 작은 글씨로 */
+  @media (max-width: 560px) {
+    .cert-list li { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; }
+    .name { grid-row: 1; grid-column: 1 / -1; }
+    .issuer { grid-row: 2; grid-column: 1; font-size: 0.85rem; }
+    .date { grid-row: 2; grid-column: 2; font-size: 0.85rem; }
+  }
 </style>
