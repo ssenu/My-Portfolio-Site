@@ -9,11 +9,13 @@ const site = (await getEntry('site', 'main'))!.data;
 <section id="about" class="section" data-reveal>
   <h2 class="section-title">{t(lang, 'section.about')}</h2>
   <div class="about-grid">
-    <img class="photo" src={site.profileImage} alt={site.name[lang]} loading="lazy" />
+    <img class="photo" src={site.profileImage} alt={site.name[lang]} loading="lazy" data-reveal />
     <div class="intro">
-      <p class="slogan">{site.slogan.map((line) => <span>{line}</span>)}</p>
-      <p class="bio">{site.about[lang]}</p>
-      <div class="actions">
+      <p class="slogan" data-slogan-repel data-reveal style="transition-delay: 0.12s">
+        {site.slogan.map((line) => <span>{line}</span>)}
+      </p>
+      <p class="bio" data-reveal style="transition-delay: 0.24s">{site.about[lang]}</p>
+      <div class="actions" data-reveal style="transition-delay: 0.36s">
         <a class="btn" href={site.github} target="_blank" rel="noopener">
           {t(lang, 'about.github')}
           <span class="arrow" aria-hidden="true">
@@ -36,6 +38,8 @@ const site = (await getEntry('site', 'main'))!.data;
   .about-grid { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: center; }
   .photo { width: 100%; border-radius: 12px; box-shadow: var(--shadow); }
   .slogan { display: flex; flex-direction: column; font-size: 1.6rem; font-weight: 700; margin-bottom: 20px; }
+  .slogan :global(.ch) { display: inline-block; transition: transform 0.18s ease-out; will-change: transform; }
+  @media (prefers-reduced-motion: reduce) { .slogan :global(.ch) { transition: none; } }
   .bio { color: var(--muted); white-space: pre-line; margin-bottom: 28px; }
   .actions { display: flex; gap: 12px; }
   .actions { align-items: center; }
@@ -55,5 +59,7 @@ const site = (await getEntry('site', 'main'))!.data;
 </style>
 <script>
   import { initMagnetic } from '../scripts/magnetic';
+  import { splitAndRepel } from '../scripts/charRepel';
   initMagnetic([...document.querySelectorAll<HTMLElement>('#about .actions .btn')]);
+  document.querySelectorAll<HTMLElement>('[data-slogan-repel] > span').forEach(splitAndRepel);
 </script>

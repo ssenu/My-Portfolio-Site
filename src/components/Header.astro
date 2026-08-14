@@ -23,4 +23,12 @@ const other: Lang = lang === 'ko' ? 'en' : 'ko';
   nav a { text-decoration: none; color: var(--muted); }
   nav a:hover { color: var(--accent); }
   .lang-toggle { border: 1px solid var(--border); border-radius: 999px; padding: 2px 12px; }
+  /* 모바일: 여백·간격 축소로 한 줄 유지, 로고와 메뉴 수직 중앙 정렬 */
+  @media (max-width: 560px) {
+    .header { padding: 10px 14px; }
+    nav { gap: 12px; align-items: center; }
+    nav a { font-size: 0.9rem; }
+    .lang-toggle { padding: 2px 10px; }
+    .logo { font-size: 1rem; }
+  }
 </style>
