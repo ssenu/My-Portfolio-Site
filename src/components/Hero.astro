@@ -34,13 +34,7 @@ const title = 'Portfolio';
 </section>
 <style>
   .hero { min-height: 100svh; display: flex; flex-direction: column; align-items: center;
-    justify-content: flex-start; text-align: center; overflow: hidden; padding: 28px 24px 24px;
-    position: relative; }
-  /* 히어로 글로우: 액센트색이 상단에서 은은하게 번짐 (테마 따라 색·강도 변화) */
-  .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(ellipse 90% 55% at 50% 10%,
-      color-mix(in srgb, var(--accent) var(--glow-a, 7%), transparent), transparent 70%);
-    transition: background 0.4s; }
+    justify-content: flex-start; text-align: center; overflow: hidden; padding: 28px 24px 24px; }
   .hero-ring { perspective: 1200px; width: 100%; height: 340px; touch-action: pan-y;
     cursor: grab; user-select: none; }
   .hero-ring.dragging { cursor: grabbing; }
