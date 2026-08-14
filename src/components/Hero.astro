@@ -6,9 +6,14 @@ const { lang } = Astro.props;
 const site = (await getEntry('site', 'main'))!.data;
 const featured = (await getCollection('projects', (p) => p.data.featured))
   .sort((a, b) => a.data.order - b.data.order);
-const title = `Portfolio ${site.name[lang]}`;
+const title = 'Portfolio';
 ---
 <section class="hero" data-reveal>
+  <h1 class="hero-title" aria-label={title} data-char-repel>
+    {[...title].map((ch) => (
+      <span class="ch" aria-hidden="true">{ch === ' ' ? ' ' : ch}</span>
+    ))}
+  </h1>
   {featured.length > 0 && (
     <div class="hero-ring" data-ring>
       <div class="ring-stage">
@@ -20,11 +25,7 @@ const title = `Portfolio ${site.name[lang]}`;
       </div>
     </div>
   )}
-  <h1 class="hero-title" aria-label={title} data-char-repel>
-    {[...title].map((ch) => (
-      <span class="ch" aria-hidden="true">{ch === ' ' ? ' ' : ch}</span>
-    ))}
-  </h1>
+  <p class="hero-name">{site.name.en}</p>
   <p class="dev-name">Dev name_ {site.devName}</p>
 </section>
 <style>
@@ -53,7 +54,9 @@ const title = `Portfolio ${site.name[lang]}`;
   .hero.revealed .ring-card:nth-child(n+5), .hero.revealed .ring-card:nth-child(n+5) img { transition-delay: 0.9s; }
   .hero.revealed .ring-card:last-child, .hero.revealed .ring-card:last-child img { transition-delay: 0s; }
 
-  h1 { font-size: clamp(2rem, 5vw, 3rem); margin-top: 24px; }
+  h1 { font-size: clamp(2.8rem, 7vw, 4.5rem); font-weight: 800; letter-spacing: -0.02em;
+    margin-bottom: 8px; }
+  .hero-name { font-size: clamp(1.2rem, 2.5vw, 1.6rem); font-weight: 600; margin-top: 20px; }
   .hero-title .ch { display: inline-block; transition: transform 0.18s ease-out; will-change: transform; }
   @media (prefers-reduced-motion: reduce) {
     .hero .ring-card, .hero .ring-card img { opacity: 1; transform: none; transition: none; }
