@@ -67,7 +67,10 @@ const title = 'Portfolio';
     .hero-title .ch, .hero-name .ch { transition: none; }
   }
   .dev-name { color: var(--muted); margin-bottom: auto; }
-  @media (max-width: 640px) { .ring-card { width: 130px; height: 180px; margin: -90px 0 0 -65px; } }
+  @media (max-width: 640px) {
+    .hero-ring { height: 230px; }
+    .ring-card { width: 130px; height: 180px; margin: -90px 0 0 -65px; }
+  }
 </style>
 <script>
   import { initHeroRing } from '../scripts/heroRing';
