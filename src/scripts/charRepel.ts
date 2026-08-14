@@ -9,8 +9,8 @@ export function initCharRepel(root: HTMLElement): void {
   if (started || allChars.length === 0) return;
   started = true;
 
-  const RADIUS = 100; // 반응 반경(px)
-  const PUSH = 28;    // 최대 밀림 거리(px)
+  const RADIUS = 150; // 반응 반경(px)
+  const PUSH = 55;    // 최대 밀림 거리(px)
   let raf = 0;
 
   const update = (x: number, y: number) => {
