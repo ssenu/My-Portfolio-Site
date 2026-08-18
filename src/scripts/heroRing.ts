@@ -3,10 +3,6 @@ import { stepRing, addImpulse, BASE_VELOCITY, type RingState } from '../lib/ring
 const DEG_PER_PX = 0.35;      // 드래그 감도
 const CLICK_THRESHOLD_PX = 5; // 이하 이동이면 클릭으로 판정
 const WHEEL_IMPULSE = 0.25;   // 휠 deltaY → 각속도
-const REPEL_RADIUS = 190;     // 커서 반응 반경(px)
-const REPEL_PUSH = 78;        // 최대 밀림 거리(px)
-const REPEL_MAX_DEG = 26;     // 각도 밀림 상한(deg)
-const REPEL_EASE = 0.16;      // 제자리 복귀 감쇠
 
 export function initHeroRing(root: HTMLElement): void {
   const stage = root.querySelector<HTMLElement>('.ring-stage');
@@ -18,7 +14,8 @@ export function initHeroRing(root: HTMLElement): void {
   const cardW = cards[0].offsetWidth;
   const radius = Math.round(cardW / 2 / Math.tan(Math.PI / Math.max(n, 3)) + 40);
   cards.forEach((c, i) => {
-    c.style.transform = `translate(-50%, -50%) rotateY(${(360 / n) * i}deg) translateZ(${radius}px)`;
+    // --lift/--zoom은 CSS hover가 조절 (살짝 떠오르며 포커싱)
+    c.style.transform = `translate(-50%, -50%) rotateY(${(360 / n) * i}deg) translateZ(${radius}px) translateY(var(--lift, 0px)) scale(var(--zoom, 1))`;
     c.style.margin = '0';
     c.style.left = '50%'; c.style.top = '50%';
   });
@@ -65,67 +62,10 @@ export function initHeroRing(root: HTMLElement): void {
       window.dispatchEvent(new CustomEvent('open-project', { detail: { slug: c.dataset.slug } }));
   }));
 
-  // 커서 회피: 회전 중 커서 근처를 지나는 카드가 살짝 밀려났다가 복귀
-  let mx = -1e4, my = -1e4;
-  root.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
-  root.addEventListener('mouseleave', () => { mx = -1e4; my = -1e4; });
-  const offsets = cards.map(() => ({ y: 0, a: 0, active: false }));
-  const clamp = (v: number, lim: number) => Math.max(-lim, Math.min(lim, v));
-
-  const SPREAD = [1, 0.5, 0.22]; // 전파 가중치: 자기 자신, 옆 장, 그 옆 장
-
-  const applyRepel = () => {
-    // 1) 카드별 원시 밀림량 계산
-    const raw = cards.map((c, i) => {
-      if (dragging || mx <= -1e3) return { a: 0, y: 0 };
-      const r = c.getBoundingClientRect();
-      const dx = r.left + r.width / 2 - mx;
-      const dy = r.top + r.height / 2 - my;
-      const d = Math.hypot(dx, dy);
-      if (d >= REPEL_RADIUS || d <= 0) return { a: 0, y: 0 };
-      const f = ((REPEL_RADIUS - d) / REPEL_RADIUS) * REPEL_PUSH;
-      // 수평 밀림은 링 궤도 위 각도 오프셋으로 변환 (화면 dx/dθ = r·cosθ 보정)
-      const theta = ((state.angle + (360 / n) * i) * Math.PI) / 180;
-      const cos = Math.cos(theta);
-      const cosC = (cos < 0 ? -1 : 1) * Math.max(Math.abs(cos), 0.35);
-      return {
-        a: clamp((((dx / d) * f) / (radius * cosC)) * (180 / Math.PI), REPEL_MAX_DEG),
-        y: (dy / d) * f,
-      };
-    });
-
-    cards.forEach((c, i) => {
-      const o = offsets[i];
-      // 2) 이웃 전파: 좌우(각도) 밀림이 자기 쪽으로 향할 때만 전달 — 세로 밀림은 전파 안 함
-      let ta = raw[i].a;
-      const ty = raw[i].y;
-      for (let k = 1; k <= 2; k++) {
-        const w = SPREAD[k];
-        const back = raw[(i - k + n) % n];  // 뒤쪽 이웃이 +방향(나를 향해) 밀렸을 때
-        if (back.a > 0) ta += back.a * w;
-        const fwd = raw[(i + k) % n];       // 앞쪽 이웃이 -방향(나를 향해) 밀렸을 때
-        if (fwd.a < 0) ta += fwd.a * w;
-      }
-      ta = clamp(ta, REPEL_MAX_DEG);
-      o.a += (ta - o.a) * REPEL_EASE;
-      o.y += (ty - o.y) * REPEL_EASE;
-      const moving = Math.abs(o.a) > 0.02 || Math.abs(o.y) > 0.05;
-      if (moving) {
-        c.style.transform = `translate(-50%, -50%) translateY(${o.y}px) rotateY(${(360 / n) * i + o.a}deg) translateZ(${radius}px)`;
-        o.active = true;
-      } else if (o.active) {
-        c.style.transform = `translate(-50%, -50%) rotateY(${(360 / n) * i}deg) translateZ(${radius}px)`;
-        o.active = false; o.a = 0; o.y = 0;
-      }
-    });
-  };
-
-  const reducedRepel = () => reduced.matches;
   const loop = (now: number) => {
     const dt = Math.min((now - lastT) / 1000, 0.05); lastT = now;
     if (!dragging && !document.hidden) state = stepRing(state, dt, base);
     stage.style.setProperty('--ring-angle', `${state.angle}deg`);
-    if (!reducedRepel() && !document.hidden) applyRepel();
     requestAnimationFrame(loop);
   };
   requestAnimationFrame((t) => { lastT = t; requestAnimationFrame(loop); });

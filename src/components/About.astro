@@ -61,5 +61,5 @@ const site = (await getEntry('site', 'main'))!.data;
   import { initMagnetic } from '../scripts/magnetic';
   import { splitAndRepel } from '../scripts/charRepel';
   initMagnetic([...document.querySelectorAll<HTMLElement>('#about .actions .btn')]);
-  document.querySelectorAll<HTMLElement>('[data-slogan-repel] > span').forEach(splitAndRepel);
+  document.querySelectorAll<HTMLElement>('[data-slogan-repel] > span').forEach((el) => splitAndRepel(el));
 </script>

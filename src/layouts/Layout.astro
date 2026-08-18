@@ -30,7 +30,7 @@ const site = (await getEntry('site', 'main'))!.data;
       import { initReveal } from '../scripts/reveal';
       import { splitAndRepel } from '../scripts/charRepel';
       initReveal();
-      document.querySelectorAll<HTMLElement>('.section-title').forEach(splitAndRepel);
+      document.querySelectorAll<HTMLElement>('.section-title').forEach((el) => splitAndRepel(el));
     </script>
     <footer class="footer">
       <p>© 2026 {site.name[lang]} · {site.devName}</p>

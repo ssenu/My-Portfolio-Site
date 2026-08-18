@@ -42,21 +42,26 @@ const title = 'Portfolio';
     transform-style: preserve-3d; transform: rotateY(var(--ring-angle, 0deg)); }
   .ring-card { position: absolute; left: 50%; top: 50%; width: 180px; height: 240px;
     margin: -120px 0 0 -90px; border: none; padding: 0; border-radius: 12px; overflow: hidden;
-    background: var(--card); box-shadow: var(--shadow); backface-visibility: hidden; }
+    background: var(--card); box-shadow: var(--shadow); backface-visibility: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease; }
+  /* hover: 살짝 떠오르며 포커싱 (--lift/--zoom은 JS가 심어둔 transform이 소비) */
+  .ring-card:hover, .ring-card:focus-visible { --lift: -12px; --zoom: 1.05;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 0.14), 0 14px 28px rgb(0 0 0 / 0.16),
+      0 30px 56px -12px rgb(0 0 0 / 0.22); filter: brightness(1.04); }
   .ring-card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 
   /* 링 카드 개별 등장: 히어로 리빌 후 하나씩 스르륵 (opacity + 이미지 슬라이드) */
   .hero:not(.revealed) .ring-card { opacity: 0; }
-  .hero.revealed .ring-card { opacity: 1; transition: opacity 0.7s ease; }
+  .hero.revealed:not(.reveal-done) .ring-card { opacity: 1; transition: opacity 0.7s ease; }
   .hero:not(.revealed) .ring-card img { transform: translateY(24px); }
-  .hero.revealed .ring-card img { transform: none; transition: transform 0.7s ease; }
+  .hero.revealed:not(.reveal-done) .ring-card img { transform: none; transition: transform 0.7s ease; }
   /* 등장 순서: 마지막 장(첫 장 왼쪽) → 첫 장 → 두 번째 장 → … → 마지막 전 장 */
-  .hero.revealed .ring-card:nth-child(1), .hero.revealed .ring-card:nth-child(1) img { transition-delay: 0.18s; }
-  .hero.revealed .ring-card:nth-child(2), .hero.revealed .ring-card:nth-child(2) img { transition-delay: 0.36s; }
-  .hero.revealed .ring-card:nth-child(3), .hero.revealed .ring-card:nth-child(3) img { transition-delay: 0.54s; }
-  .hero.revealed .ring-card:nth-child(4), .hero.revealed .ring-card:nth-child(4) img { transition-delay: 0.72s; }
-  .hero.revealed .ring-card:nth-child(n+5), .hero.revealed .ring-card:nth-child(n+5) img { transition-delay: 0.9s; }
-  .hero.revealed .ring-card:last-child, .hero.revealed .ring-card:last-child img { transition-delay: 0s; }
+  .hero.revealed:not(.reveal-done) .ring-card:nth-child(1), .hero.revealed:not(.reveal-done) .ring-card:nth-child(1) img { transition-delay: 0.18s; }
+  .hero.revealed:not(.reveal-done) .ring-card:nth-child(2), .hero.revealed:not(.reveal-done) .ring-card:nth-child(2) img { transition-delay: 0.36s; }
+  .hero.revealed:not(.reveal-done) .ring-card:nth-child(3), .hero.revealed:not(.reveal-done) .ring-card:nth-child(3) img { transition-delay: 0.54s; }
+  .hero.revealed:not(.reveal-done) .ring-card:nth-child(4), .hero.revealed:not(.reveal-done) .ring-card:nth-child(4) img { transition-delay: 0.72s; }
+  .hero.revealed:not(.reveal-done) .ring-card:nth-child(n+5), .hero.revealed:not(.reveal-done) .ring-card:nth-child(n+5) img { transition-delay: 0.9s; }
+  .hero.revealed:not(.reveal-done) .ring-card:last-child, .hero.revealed:not(.reveal-done) .ring-card:last-child img { transition-delay: 0s; }
 
   h1 { font-size: clamp(4rem, 11vw, 7rem); font-weight: 800; letter-spacing: -0.02em;
     margin: 0 0 20px; }
@@ -77,5 +82,9 @@ const title = 'Portfolio';
   import { initCharRepel } from '../scripts/charRepel';
   const root = document.querySelector<HTMLElement>('[data-ring]');
   if (root) initHeroRing(root);
-  document.querySelectorAll<HTMLElement>('[data-char-repel]').forEach(initCharRepel);
+  // 히어로 타이틀만 강하게, 이름은 은은하게
+  const heroTitle = document.querySelector<HTMLElement>('.hero-title');
+  if (heroTitle) initCharRepel(heroTitle, { radius: 150, push: 55 });
+  const heroName = document.querySelector<HTMLElement>('.hero-name');
+  if (heroName) initCharRepel(heroName);
 </script>

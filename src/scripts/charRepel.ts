@@ -1,29 +1,33 @@
 // 제목 글자들이 마우스 커서 주위에서 밀려나는 인터랙션
 // 여러 제목에서 호출해도 mousemove 리스너는 하나만 등록된다.
-const allChars: HTMLElement[] = [];
+// 강도는 호출부에서 조절: 기본은 은은하게, 히어로 타이틀만 강하게.
+interface CharEntry { el: HTMLElement; radius: number; push: number }
+export interface RepelOptions { radius?: number; push?: number }
+const allChars: CharEntry[] = [];
 let started = false;
 
-export function initCharRepel(root: HTMLElement): void {
+export function initCharRepel(root: HTMLElement, opts: RepelOptions = {}): void {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  allChars.push(...root.querySelectorAll<HTMLElement>('.ch'));
+  const radius = opts.radius ?? 110; // 기본 반응 반경(px)
+  const push = opts.push ?? 26;     // 기본 최대 밀림 거리(px)
+  root.querySelectorAll<HTMLElement>('.ch').forEach((el) =>
+    allChars.push({ el, radius, push }));
   if (started || allChars.length === 0) return;
   started = true;
 
-  const RADIUS = 150; // 반응 반경(px)
-  const PUSH = 55;    // 최대 밀림 거리(px)
   let raf = 0;
 
   const update = (x: number, y: number) => {
     for (const c of allChars) {
-      const r = c.getBoundingClientRect();
+      const r = c.el.getBoundingClientRect();
       const dx = r.left + r.width / 2 - x;
       const dy = r.top + r.height / 2 - y;
       const d = Math.hypot(dx, dy);
-      if (d < RADIUS && d > 0) {
-        const f = ((RADIUS - d) / RADIUS) * PUSH;
-        c.style.transform = `translate(${(dx / d) * f}px, ${(dy / d) * f}px)`;
-      } else if (c.style.transform) {
-        c.style.transform = '';
+      if (d < c.radius && d > 0) {
+        const f = ((c.radius - d) / c.radius) * c.push;
+        c.el.style.transform = `translate(${(dx / d) * f}px, ${(dy / d) * f}px)`;
+      } else if (c.el.style.transform) {
+        c.el.style.transform = '';
       }
     }
   };
@@ -39,7 +43,7 @@ export function initCharRepel(root: HTMLElement): void {
 }
 
 // 제목 요소의 텍스트를 글자 span(.ch)으로 분해한 뒤 커서 회피를 활성화
-export function splitAndRepel(el: HTMLElement): void {
+export function splitAndRepel(el: HTMLElement, opts: RepelOptions = {}): void {
   const text = (el.textContent ?? '').trim();
   if (!text) return;
   el.setAttribute('aria-label', text);
@@ -51,5 +55,5 @@ export function splitAndRepel(el: HTMLElement): void {
     s.textContent = ch === ' ' ? ' ' : ch;
     el.appendChild(s);
   }
-  initCharRepel(el);
+  initCharRepel(el, opts);
 }
