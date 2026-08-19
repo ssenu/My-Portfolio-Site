@@ -6,7 +6,7 @@ const { lang } = Astro.props;
 const site = (await getEntry('site', 'main'))!.data;
 const featured = (await getCollection('projects', (p) => p.data.featured))
   .sort((a, b) => a.data.order - b.data.order);
-const title = 'Portfolio';
+const title = 'Profile';
 ---
 <section class="hero" data-reveal>
   <h1 class="hero-title" aria-label={title} data-char-repel>
