@@ -15,7 +15,7 @@
 `src/content/data/certifications.yaml`에 항목 추가: id(kebab-case 고유값), issuer{ko,en}, name{ko,en}, date("YYYY.MM.DD").
 
 ## 수상(Awards) / 교육(Programs) 추가
-`src/content/data/awards.yaml` 또는 `programs.yaml`에 항목 추가: id, name{ko,en}, org{ko,en}, period("YYYY.MM.DD ~ YYYY.MM.DD"), scan(선택 — 상장/수료증 스캔본 경로).
+`src/content/data/awards.yaml` 또는 `programs.yaml`에 항목 추가: id, name{ko,en}(상 종류), detail{ko,en}(선택 — 작품명·주제, 작은 글씨), org{ko,en}, period("YYYY.MM.DD ~ YYYY.MM.DD"), scan(선택 — 상장/수료증 스캔본 경로).
 스캔본은 `public/images/achievements/<id>.webp`(권장 세로형 3:4)에 배치. scan이 있으면 오른쪽 그리드에 표시되고 목록과 hover 연동된다.
 
 ## 소개글/연락처 수정

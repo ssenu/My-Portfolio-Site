@@ -24,6 +24,7 @@ const projects = defineCollection({
 const achievement = z.object({
   id: z.string(),
   name: localized,
+  detail: localized.optional(), // 작품명·주제 등 부가 설명 (작은 글씨로 표시)
   org: localized,
   period: z.string(),
   scan: z.string().optional(),

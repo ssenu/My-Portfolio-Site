@@ -16,7 +16,10 @@ const scans = [...awards, ...programs].filter((a) => a.data.scan);
       <ul>
         {awards.map((a) => (
           <li class="ach-item" data-id={a.data.id}>
-            {a.data.name[lang]} <span class="period">{a.data.period}</span>
+            {a.data.name[lang]}
+            <span class="period">
+              {a.data.detail && <>{a.data.detail[lang]} · </>}{a.data.period}
+            </span>
           </li>
         ))}
       </ul>
@@ -24,7 +27,10 @@ const scans = [...awards, ...programs].filter((a) => a.data.scan);
       <ul>
         {programs.map((a) => (
           <li class="ach-item" data-id={a.data.id}>
-            {a.data.name[lang]} <span class="period">{a.data.period}</span>
+            {a.data.name[lang]}
+            <span class="period">
+              {a.data.detail && <>{a.data.detail[lang]} · </>}{a.data.period}
+            </span>
           </li>
         ))}
       </ul>
