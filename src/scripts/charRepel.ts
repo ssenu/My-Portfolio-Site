@@ -40,6 +40,21 @@ export function initCharRepel(root: HTMLElement, opts: RepelOptions = {}): void 
     });
   });
   document.addEventListener('mouseleave', () => update(-9999, -9999));
+
+  // 터치: 손가락을 누른 채 움직이면 그 지점이 커서 역할 (스크롤은 막지 않음, passive)
+  const onTouch = (e: TouchEvent) => {
+    const t = e.touches[0];
+    if (!t) return;
+    const x = t.clientX, y = t.clientY;
+    if (raf) return;
+    raf = requestAnimationFrame(() => { raf = 0; update(x, y); });
+  };
+  window.addEventListener('touchstart', onTouch, { passive: true });
+  window.addEventListener('touchmove', onTouch, { passive: true });
+  // 손가락을 떼면 글자들이 제자리로 복귀
+  const release = () => { if (raf) { cancelAnimationFrame(raf); raf = 0; } update(-9999, -9999); };
+  window.addEventListener('touchend', release, { passive: true });
+  window.addEventListener('touchcancel', release, { passive: true });
 }
 
 // 제목 요소의 텍스트를 글자 span(.ch)으로 분해한 뒤 커서 회피를 활성화
