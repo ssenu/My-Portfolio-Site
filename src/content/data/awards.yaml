@@ -1,15 +1,25 @@
-- id: award-hackathon-2026
-  name: { ko: "2026 해커톤 경진대회 대상 수상", en: "2026 Hackathon Grand Prize" }
-  org: { ko: "주최 기관", en: "Host Organization" }
-  period: "2026.08.11 ~ 2026.08.12"
-  scan: "/images/achievements/award-hackathon-2026.svg"
-- id: award-contest-2025
-  name: { ko: "2025 SW 개발 공모전 우수상", en: "2025 SW Development Contest Excellence Award" }
-  org: { ko: "지역 SW 진흥원", en: "Regional SW Promotion Agency" }
-  period: "2025.11.01 ~ 2025.11.02"
-  scan: "/images/achievements/award-contest-2025.svg"
-- id: award-capstone-2026
-  name: { ko: "2026 캡스톤 디자인 경진대회 최우수상", en: "2026 Capstone Design Competition Top Prize" }
-  org: { ko: "대학 공학교육혁신센터", en: "University Engineering Education Center" }
-  period: "2026.06.20 ~ 2026.06.21"
-  scan: "/images/achievements/award-capstone-2026.svg"
+- id: award-capstone-2023-1
+  name: { ko: "2023-1학기 캡스톤디자인 경진대회 동상 — 스마트 쓰레기통", en: "2023 Spring Capstone Design Competition, Bronze Prize — Smart Trash Bin" }
+  org: { ko: "명지전문대학", en: "Myongji College" }
+  period: "2023.06.15"
+  scan: "/images/achievements/award-capstone-2023-1.jpg"
+- id: award-festival-2023-game
+  name: { ko: "2023 학술제 장려상 — 장애물 피하기 게임 및 랭킹 시스템", en: "2023 Academic Festival, Encouragement Award — Obstacle-Dodging Game & Ranking System" }
+  org: { ko: "명지전문대학 정보통신공학과", en: "Dept. of Information & Communication Eng., Myongji College" }
+  period: "2023.12.12"
+  scan: "/images/achievements/award-festival-2023-game.jpg"
+- id: award-festival-2023-crowd
+  name: { ko: "2023 학술제 장려상 — 이미지 분석 모델 기반 인파 밀집도 정보제공 웹", en: "2023 Academic Festival, Encouragement Award — Crowd-Density Web via Image Analysis" }
+  org: { ko: "명지전문대학 정보통신공학과", en: "Dept. of Information & Communication Eng., Myongji College" }
+  period: "2023.12.12"
+  scan: "/images/achievements/award-festival-2023-crowd.jpg"
+- id: award-capstone-2023-2
+  name: { ko: "2023-2학기 캡스톤디자인 경진대회 장려상 — 두둥", en: "2023 Fall Capstone Design Competition, Encouragement Award — Dudung" }
+  org: { ko: "명지전문대학", en: "Myongji College" }
+  period: "2023.12.23"
+  scan: "/images/achievements/award-capstone-2023-2.jpg"
+- id: award-ai-hackathon-2026
+  name: { ko: "2026 AI 해커톤 경진대회 대상 — 팀 Woo", en: "2026 AI Hackathon Competition, Grand Prize — Team Woo" }
+  org: { ko: "명지전문대학 RISE사업단", en: "Myongji College RISE Program" }
+  period: "2026.08.07"
+  scan: "/images/achievements/award-ai-hackathon-2026.jpg"
