@@ -1,10 +1,6 @@
-- id: itq-hwp
+- id: itq
   issuer: { ko: "한국생산성본부", en: "Korea Productivity Center" }
-  name: { ko: "ITQ 아래한글 A등급", en: "ITQ HWP, Grade A" }
-  date: "2019.05.02"
-- id: itq-excel
-  issuer: { ko: "한국생산성본부", en: "Korea Productivity Center" }
-  name: { ko: "ITQ 한글엑셀 A등급", en: "ITQ Excel, Grade A" }
+  name: { ko: "ITQ 아래한글·한글엑셀 A등급", en: "ITQ HWP & Excel, Grade A" }
   date: "2019.08.01"
 - id: engineer-info-processing-industrial
   issuer: { ko: "한국산업인력공단", en: "HRD Korea" }
