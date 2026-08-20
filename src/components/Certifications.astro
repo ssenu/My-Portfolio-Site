@@ -21,10 +21,16 @@ const certs = await getCollection('certifications');
 <style>
   .cert-list { list-style: none; padding: 0; max-width: 640px; margin: 0 auto; }
   .cert-list li { display: flex; gap: 16px; justify-content: space-between; padding: 12px 8px;
-    border-bottom: 1px solid var(--border); }
+    border-bottom: 1px solid var(--border); border-radius: 8px;
+    transition: background-color 0.15s, transform 0.15s, box-shadow 0.15s; }
+  /* hover: Achievements 목록과 같은 결의 포인트 — 카드색 배경 + 살짝 이동 + 이름 액센트 */
+  .cert-list li:hover { background: var(--card); transform: translateX(6px); box-shadow: var(--shadow); }
+  .cert-list li:hover .name { color: var(--accent); }
   .issuer { color: var(--muted); }
-  .name { flex: 1; }
+  .name { flex: 1; transition: color 0.15s; }
   .date { color: var(--muted); font-variant-numeric: tabular-nums; }
+  @media (prefers-reduced-motion: reduce) { .cert-list li, .name { transition: none; }
+    .cert-list li:hover { transform: none; } }
   /* 모바일: 자격증명 한 줄, 그 아래 발급기관·날짜를 작은 글씨로 */
   @media (max-width: 560px) {
     .cert-list li { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; }
