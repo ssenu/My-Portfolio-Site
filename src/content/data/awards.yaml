@@ -24,6 +24,7 @@
   scan: "/images/achievements/award-capstone-2023-2.jpg"
 - id: award-ai-hackathon-2026
   name: { ko: "AI 해커톤 경진대회 대상", en: "AI Hackathon Competition, Grand Prize" }
+  detail: { ko: "MJC 동아리 아카이브", en: "MJC Club Archive" }
   org: { ko: "명지전문대학 RISE사업단", en: "Myongji College RISE Program" }
   period: "2026.08.07"
   scan: "/images/achievements/award-ai-hackathon-2026.jpg"

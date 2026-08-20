@@ -18,7 +18,7 @@ const scans = [...awards, ...programs].filter((a) => a.data.scan);
           <li class="ach-item" data-id={a.data.id}>
             {a.data.name[lang]}
             <span class="period">
-              {a.data.detail && <>{a.data.detail[lang]} · </>}{a.data.period}
+              {a.data.period}{a.data.detail && <> · {a.data.detail[lang]}</>}
             </span>
           </li>
         ))}
@@ -29,7 +29,7 @@ const scans = [...awards, ...programs].filter((a) => a.data.scan);
           <li class="ach-item" data-id={a.data.id}>
             {a.data.name[lang]}
             <span class="period">
-              {a.data.detail && <>{a.data.detail[lang]} · </>}{a.data.period}
+              {a.data.period}{a.data.detail && <> · {a.data.detail[lang]}</>}
             </span>
           </li>
         ))}
