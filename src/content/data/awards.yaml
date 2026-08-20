@@ -1,6 +1,6 @@
 - id: award-capstone-2023-1
   name: { ko: "캡스톤디자인 경진대회 동상", en: "Capstone Design Competition, Bronze Prize" }
-  detail: { ko: "2023-1학기 · 스마트 쓰레기통", en: "2023 Spring · Smart Trash Bin" }
+  detail: { ko: "스마트 쓰레기통", en: "Smart Trash Bin" }
   org: { ko: "명지전문대학", en: "Myongji College" }
   period: "2023.06.15"
   scan: "/images/achievements/award-capstone-2023-1.jpg"
@@ -18,13 +18,12 @@
   scan: "/images/achievements/award-festival-2023-crowd.jpg"
 - id: award-capstone-2023-2
   name: { ko: "캡스톤디자인 경진대회 장려상", en: "Capstone Design Competition, Encouragement Award" }
-  detail: { ko: "2023-2학기 · 두둥", en: "2023 Fall · Dudung" }
+  detail: { ko: "두둥", en: "Dudung" }
   org: { ko: "명지전문대학", en: "Myongji College" }
   period: "2023.12.23"
   scan: "/images/achievements/award-capstone-2023-2.jpg"
 - id: award-ai-hackathon-2026
   name: { ko: "AI 해커톤 경진대회 대상", en: "AI Hackathon Competition, Grand Prize" }
-  detail: { ko: "팀 Woo · RISE사업단", en: "Team Woo · RISE Program" }
   org: { ko: "명지전문대학 RISE사업단", en: "Myongji College RISE Program" }
   period: "2026.08.07"
   scan: "/images/achievements/award-ai-hackathon-2026.jpg"
