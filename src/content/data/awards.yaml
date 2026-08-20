@@ -1,29 +1,29 @@
 - id: award-capstone-2023-1
-  name: { ko: "캡스톤디자인 경진대회 동상", en: "Capstone Design Competition, Bronze Prize" }
+  name: { ko: "2023년도 캡스톤디자인 경진대회 동상", en: "2023 Capstone Design Competition, Bronze Prize" }
   detail: { ko: "스마트 쓰레기통", en: "Smart Trash Bin" }
   org: { ko: "명지전문대학", en: "Myongji College" }
   period: "2023.06.15"
   scan: "/images/achievements/award-capstone-2023-1.jpg"
 - id: award-festival-2023-game
-  name: { ko: "학술제 장려상", en: "Academic Festival, Encouragement Award" }
+  name: { ko: "2023년도 학술제 장려상", en: "2023 Academic Festival, Encouragement Award" }
   detail: { ko: "장애물 피하기 게임 및 랭킹 시스템", en: "Obstacle-Dodging Game & Ranking System" }
   org: { ko: "명지전문대학 정보통신공학과", en: "Dept. of Information & Communication Eng., Myongji College" }
   period: "2023.12.12"
   scan: "/images/achievements/award-festival-2023-game.jpg"
 - id: award-festival-2023-crowd
-  name: { ko: "학술제 장려상", en: "Academic Festival, Encouragement Award" }
+  name: { ko: "2023년도 학술제 장려상", en: "2023 Academic Festival, Encouragement Award" }
   detail: { ko: "이미지 분석 모델 기반 인파 밀집도 정보제공 웹", en: "Crowd-Density Web via Image Analysis" }
   org: { ko: "명지전문대학 정보통신공학과", en: "Dept. of Information & Communication Eng., Myongji College" }
   period: "2023.12.12"
   scan: "/images/achievements/award-festival-2023-crowd.jpg"
 - id: award-capstone-2023-2
-  name: { ko: "캡스톤디자인 경진대회 장려상", en: "Capstone Design Competition, Encouragement Award" }
+  name: { ko: "2023년도 캡스톤디자인 경진대회 장려상", en: "2023 Capstone Design Competition, Encouragement Award" }
   detail: { ko: "두둥", en: "Dudung" }
   org: { ko: "명지전문대학", en: "Myongji College" }
   period: "2023.12.23"
   scan: "/images/achievements/award-capstone-2023-2.jpg"
 - id: award-ai-hackathon-2026
-  name: { ko: "AI 해커톤 경진대회 대상", en: "AI Hackathon Competition, Grand Prize" }
+  name: { ko: "2026년도 AI 해커톤 경진대회 대상", en: "2026 AI Hackathon Competition, Grand Prize" }
   detail: { ko: "MJC 동아리 아카이브", en: "MJC Club Archive" }
   org: { ko: "명지전문대학 RISE사업단", en: "Myongji College RISE Program" }
   period: "2026.08.07"
