@@ -1,20 +1,16 @@
-- id: engineer-info-processing
-  issuer: { ko: "한국인터넷진흥협회", en: "Korea Internet Promotion Association" }
-  name: { ko: "정보처리산업기사", en: "Industrial Engineer Information Processing" }
-  date: "2025.06.12"
-- id: sqld
-  issuer: { ko: "한국데이터산업진흥원", en: "Korea Data Agency" }
-  name: { ko: "SQL 개발자 (SQLD)", en: "SQL Developer (SQLD)" }
-  date: "2025.09.19"
-- id: linux-master-2
-  issuer: { ko: "한국정보통신진흥협회", en: "Korea Information & Communication Association" }
-  name: { ko: "리눅스마스터 2급", en: "Linux Master Level 2" }
-  date: "2025.12.06"
-- id: network-admin-2
-  issuer: { ko: "한국정보통신자격협회", en: "Korea ICT Qualification Association" }
-  name: { ko: "네트워크관리사 2급", en: "Network Administrator Level 2" }
-  date: "2026.02.21"
-- id: engineer-info-processing-1
+- id: engineer-info-processing-industrial
   issuer: { ko: "한국산업인력공단", en: "HRD Korea" }
-  name: { ko: "정보처리기사", en: "Engineer Information Processing" }
-  date: "2026.06.14"
+  name: { ko: "정보처리산업기사", en: "Industrial Engineer Information Processing" }
+  date: "2025.06.13"
+- id: network-admin-2
+  issuer: { ko: "한국정보통신자격협회", en: "Korea Information & Communication Qualification Association" }
+  name: { ko: "네트워크관리사 2급", en: "Network Administrator Level 2" }
+  date: "2025.12.09"
+- id: word-processor
+  issuer: { ko: "대한상공회의소", en: "Korea Chamber of Commerce & Industry" }
+  name: { ko: "워드프로세서", en: "Word Processor Specialist" }
+  date: "2026.02.24"
+- id: info-equipment-operation
+  issuer: { ko: "한국산업인력공단", en: "HRD Korea" }
+  name: { ko: "정보기기운용기능사", en: "Craftsman Information Equipment Operation" }
+  date: "2026.04.10"
