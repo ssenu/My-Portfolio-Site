@@ -7,14 +7,12 @@ const { lang } = Astro.props;
 <section id="visits" class="section" data-reveal data-visits hidden>
   <h2 class="section-title">{t(lang, 'section.visits')}</h2>
   <p class="visits-num"><span data-visits-count>0</span></p>
-  <p class="visits-label">{lang === 'ko' ? '번째 방문' : 'total visits'}</p>
 </section>
 <style>
   #visits { padding-top: 48px; padding-bottom: 48px; }
   .visits-num { text-align: center; font-size: clamp(3rem, 8vw, 5rem); font-weight: 800;
     letter-spacing: -0.02em; line-height: 1.1; font-variant-numeric: tabular-nums;
     color: var(--accent); }
-  .visits-label { text-align: center; color: var(--muted); margin-top: 4px; }
 </style>
 <script>
   import { initVisits } from '../scripts/visits';
