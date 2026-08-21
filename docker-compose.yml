@@ -3,4 +3,9 @@ services:
     build: .
     ports:
       - "${HOST_PORT:-8001}:80"
+    volumes:
+      - visits-data:/data
     restart: unless-stopped
+
+volumes:
+  visits-data:
