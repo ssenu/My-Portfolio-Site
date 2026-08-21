@@ -34,17 +34,9 @@ const site = (await getEntry('site', 'main'))!.data;
     </script>
     <footer class="footer">
       <p>© 2026 {site.name[lang]} · {site.devName}</p>
-      <p class="visits" data-visits hidden>
-        <span data-visits-count>0</span> {lang === 'ko' ? '번째 방문' : 'visits'}
-      </p>
     </footer>
-    <script>
-      import { initVisits } from '../scripts/visits';
-      initVisits();
-    </script>
   </body>
 </html>
 <style>
   .footer { text-align: center; padding: 32px; color: var(--muted); font-size: 0.85rem; }
-  .visits { margin-top: 6px; font-variant-numeric: tabular-nums; }
 </style>

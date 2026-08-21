@@ -7,6 +7,7 @@ import Achievements from './Achievements.astro';
 import Projects from './Projects.astro';
 import ProjectModal from './ProjectModal.astro';
 import Contact from './Contact.astro';
+import Visits from './Visits.astro';
 import Lightbox from './Lightbox.astro';
 import ThemeSwitcher from './ThemeSwitcher.astro';
 import { getEntry } from 'astro:content';
@@ -23,6 +24,7 @@ const title = `Portfolio ${site.name[lang]}`;
   <Achievements lang={lang} />
   <Projects lang={lang} />
   <ProjectModal lang={lang} />
+  <Visits lang={lang} />
   <Contact lang={lang} />
   <Lightbox lang={lang} />
   <ThemeSwitcher lang={lang} />
