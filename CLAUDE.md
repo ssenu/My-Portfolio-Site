@@ -4,8 +4,13 @@
 **모든 텍스트는 ko/en 두 언어 필수. 작업 후 `npm run check && npm run build` 통과 확인 후 커밋.**
 
 ## 프로젝트 추가
+**원본 소스는 Obsidian 볼트다: `C:\mainVault\00_개인\포트폴리오\<프로젝트명>.md` (프로젝트 하나당 파일 하나, 이미지는 같은 폴더의 `첨부파일/`에 `![[파일명]]`으로 임베드).** 프로젝트 추가/갱신 요청이 오면 해당 볼트 md를 읽고 아래 규칙으로 사이트 콘텐츠로 변환한다:
+- 볼트의 표(깃허브 링크)·개요·내용·배운점을 frontmatter와 ko 본문으로 옮기고, en 본문은 번역해서 작성.
+- `![[이미지]]`는 `첨부파일/`에서 `public/images/projects/<slug>/`로 복사(1MB 이상이면 900px 내외로 리사이즈) 후 frontmatter `images[]`에 등록. **볼트에 등장하는 첫 이미지가 대표사진 = images[0] = thumbnail.**
+
 1. `src/content/projects/<slug>.md` 생성 (slug는 kebab-case 영문).
 2. frontmatter 필수 필드: title{ko,en}, summary{ko,en}, thumbnail, github, tech[], period, order. 선택: images[], demo, featured.
+   - `images[]`는 프로젝트 모달의 사진 캐러셀에 순서대로 표시된다 (첫 장 = 대표사진). 비어 있으면 thumbnail 한 장만 표시.
 3. 본문은 `<!-- ko -->` 섹션 다음 `<!-- en -->` 섹션 순서로 작성 (마커 필수, ko가 먼저).
 4. 이미지는 `public/images/projects/<slug>/`에 배치. 썸네일 권장 800×600 webp.
 5. `featured: true`면 히어로 회전 갤러리에 노출된다. featured는 3~8개 유지.

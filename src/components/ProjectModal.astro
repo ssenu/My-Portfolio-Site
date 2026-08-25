@@ -10,6 +10,8 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
 const rendered = projects.map((p) => ({
   ...p,
   html: marked.parse(splitBilingual(p.body ?? '')[lang]) as string,
+  // 캐러셀 사진: images[]의 첫 장이 대표사진, 비어 있으면 썸네일로 대체
+  photos: p.data.images.length > 0 ? p.data.images : [p.data.thumbnail],
 }));
 ---
 <dialog class="project-modal" data-project-modal>
@@ -18,20 +20,40 @@ const rendered = projects.map((p) => ({
 </dialog>
 {rendered.map((p) => (
   <template data-project-tpl={p.id}>
-    <h2>{p.data.title[lang]}</h2>
-    <p class="pm-period">{p.data.period}</p>
-    <ul class="pm-tech">{p.data.tech.map((tech) => <li>{tech}</li>)}</ul>
-    <div class="pm-actions">
-      <a class="btn" href={p.data.github} target="_blank" rel="noopener">{t(lang, 'modal.github')}</a>
-      {p.data.demo && <a class="btn" href={p.data.demo} target="_blank" rel="noopener">{t(lang, 'modal.demo')}</a>}
+    <div class="pm-layout">
+      <div class="pm-photos" data-carousel>
+        <div class="pm-track" data-track>
+          {p.photos.map((src) => (
+            <div class="pm-slide"><img src={src} alt={p.data.title[lang]} loading="lazy" /></div>
+          ))}
+        </div>
+        {p.photos.length > 1 && (
+          <>
+            <button class="pm-nav pm-prev" data-car-prev aria-label="previous photo">‹</button>
+            <button class="pm-nav pm-next" data-car-next aria-label="next photo">›</button>
+            <div class="pm-dots" data-dots>
+              {p.photos.map(() => <span class="pm-dot" />)}
+            </div>
+          </>
+        )}
+      </div>
+      <div class="pm-info">
+        <h2>{p.data.title[lang]}</h2>
+        <p class="pm-period">{p.data.period}</p>
+        <ul class="pm-tech">{p.data.tech.map((tech) => <li>{tech}</li>)}</ul>
+        <div class="pm-actions">
+          <a class="btn" href={p.data.github} target="_blank" rel="noopener">{t(lang, 'modal.github')}</a>
+          {p.data.demo && <a class="btn" href={p.data.demo} target="_blank" rel="noopener">{t(lang, 'modal.demo')}</a>}
+        </div>
+        <div class="pm-body" set:html={p.html} />
+      </div>
     </div>
-    {p.data.images.map((src) => <img src={src} alt={p.data.title[lang]} loading="lazy" />)}
-    <div class="pm-body" set:html={p.html} />
   </template>
 ))}
 <style is:global>
-  .project-modal { width: min(880px, 94vw); max-height: 90vh; margin: auto; border: 1px solid var(--border);
-    border-radius: 16px; background: var(--bg); color: var(--text); padding: 40px; overflow-y: auto; }
+  .project-modal { width: min(1100px, 94vw); height: min(680px, 88vh); margin: auto;
+    border: 1px solid var(--border); border-radius: 16px; background: var(--bg); color: var(--text);
+    padding: 0; overflow: hidden; }
   .project-modal[open] { animation: modal-in 0.4s ease; }
   .project-modal::backdrop { background: rgb(0 0 0 / 0.6); }
   .project-modal[open]::backdrop { animation: backdrop-in 0.4s ease; }
@@ -42,9 +64,32 @@ const rendered = projects.map((p) => ({
   @keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
   @media (prefers-reduced-motion: reduce) {
     .project-modal[open], .project-modal[open]::backdrop { animation: none; }
+    .pm-track { transition: none !important; }
   }
-  .pm-close { position: sticky; top: 0; float: right; background: var(--card);
-    border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; }
+  .pm-close { position: absolute; top: 12px; right: 12px; z-index: 5; background: var(--card);
+    color: var(--text); border: 1px solid var(--border); border-radius: 50%;
+    width: 36px; height: 36px; box-shadow: var(--shadow); }
+  .pm-content, .pm-layout { height: 100%; }
+
+  /* 인스타그램형 배치: 왼쪽 사진 / 오른쪽 스크롤 내용 */
+  .pm-layout { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+  .pm-photos { position: relative; background: rgb(0 0 0 / 0.88); overflow: hidden; }
+  .pm-track { display: flex; height: 100%; transition: transform 0.35s ease; }
+  .pm-slide { flex: 0 0 100%; display: grid; place-items: center; min-width: 0; }
+  .pm-slide img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .pm-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 4;
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border);
+    background: var(--card); color: var(--text); font-size: 1.2rem; line-height: 1;
+    box-shadow: var(--shadow); transition: opacity 0.15s; }
+  .pm-prev { left: 10px; }
+  .pm-next { right: 10px; }
+  .pm-nav[disabled] { opacity: 0; pointer-events: none; }
+  .pm-dots { position: absolute; left: 0; right: 0; bottom: 10px; display: flex;
+    justify-content: center; gap: 6px; }
+  .pm-dot { width: 7px; height: 7px; border-radius: 50%; background: rgb(255 255 255 / 0.45); }
+  .pm-dot.active { background: #fff; }
+
+  .pm-info { overflow-y: auto; padding: 36px 32px; }
   .pm-period { color: var(--muted); margin: 4px 0 12px; }
   .pm-tech { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
   .pm-tech li { background: var(--card); border: 1px solid var(--border); border-radius: 999px;
@@ -53,9 +98,16 @@ const rendered = projects.map((p) => ({
   .pm-actions .btn { padding: 8px 20px; border: 1px solid var(--border); border-radius: 8px;
     text-decoration: none; background: var(--card); }
   .pm-actions .btn:hover { border-color: var(--accent); }
-  .pm-content img { border-radius: 8px; margin-bottom: 16px; }
   .pm-body :is(h2, h3) { margin: 20px 0 8px; }
   .pm-body p { margin-bottom: 12px; }
+  .pm-body img { border-radius: 8px; }
+
+  /* 모바일: 위 사진 / 아래 내용 스택 */
+  @media (max-width: 760px) {
+    .project-modal { height: 92vh; }
+    .pm-layout { grid-template-columns: 1fr; grid-template-rows: 42% 1fr; }
+    .pm-info { padding: 24px 20px; }
+  }
 </style>
 <script>
   import { initProjectModal } from '../scripts/projectModal';

@@ -1,5 +1,33 @@
 const HASH_PREFIX = '#project-';
 
+// 모달 내 사진 캐러셀: 화살표로 좌우 이동, 끝에서는 화살표 숨김, 점 인디케이터 동기화
+function initCarousel(root: HTMLElement): void {
+  const car = root.querySelector<HTMLElement>('[data-carousel]');
+  if (!car) return;
+  const track = car.querySelector<HTMLElement>('[data-track]')!;
+  const slides = track.children.length;
+  const prev = car.querySelector<HTMLButtonElement>('[data-car-prev]');
+  const next = car.querySelector<HTMLButtonElement>('[data-car-next]');
+  const dots = [...car.querySelectorAll<HTMLElement>('.pm-dot')];
+  if (slides <= 1 || !prev || !next) return;
+  let i = 0;
+
+  const render = () => {
+    track.style.transform = `translateX(-${i * 100}%)`;
+    prev.disabled = i === 0;
+    next.disabled = i === slides - 1;
+    dots.forEach((d, k) => d.classList.toggle('active', k === i));
+  };
+  prev.addEventListener('click', () => { if (i > 0) { i--; render(); } });
+  next.addEventListener('click', () => { if (i < slides - 1) { i++; render(); } });
+  // 키보드 좌우 화살표 (모달이 열려 있는 동안)
+  root.closest('dialog')?.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' && i > 0) { i--; render(); }
+    if (e.key === 'ArrowRight' && i < slides - 1) { i++; render(); }
+  });
+  render();
+}
+
 export function initProjectModal(): void {
   const dialog = document.querySelector<HTMLDialogElement>('[data-project-modal]');
   if (!dialog) return;
@@ -11,6 +39,7 @@ export function initProjectModal(): void {
     const tpl = document.querySelector<HTMLTemplateElement>(`[data-project-tpl="${slug}"]`);
     if (!tpl) { close(false); return; }
     content.replaceChildren(tpl.content.cloneNode(true));
+    initCarousel(content);
     if (!dialog.open) dialog.showModal();
     document.body.style.overflow = 'hidden';
     if (push) {
