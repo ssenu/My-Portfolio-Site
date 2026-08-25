@@ -10,7 +10,6 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
 const rendered = projects.map((p) => ({
   ...p,
   html: marked.parse(splitBilingual(p.body ?? '')[lang]) as string,
-  // 캐러셀 사진: images[]의 첫 장이 대표사진, 비어 있으면 썸네일로 대체
   photos: p.data.images.length > 0 ? p.data.images : [p.data.thumbnail],
 }));
 ---
@@ -23,29 +22,28 @@ const rendered = projects.map((p) => ({
     <div class="pm-layout">
       <div class="pm-photos" data-carousel>
         <div class="pm-track" data-track>
-          {p.photos.map((src) => (
-            <div class="pm-slide"><img src={src} alt={p.data.title[lang]} loading="lazy" /></div>
-          ))}
+          {p.photos.map((src) => <div class="pm-slide"><img src={src} alt={p.data.title[lang]} loading="lazy" /></div>)}
         </div>
         {p.photos.length > 1 && (
-          <>
+          <div class="pm-controls">
             <button class="pm-nav pm-prev" data-car-prev aria-label="previous photo">‹</button>
             <button class="pm-nav pm-next" data-car-next aria-label="next photo">›</button>
             <div class="pm-dots" data-dots>
-              {p.photos.map(() => <span class="pm-dot" />)}
+              {p.photos.map(() => <span class="pm-dot"></span>)}
             </div>
-          </>
+          </div>
         )}
       </div>
       <div class="pm-info">
-        <h2>{p.data.title[lang]}</h2>
-        <p class="pm-period">{p.data.period}</p>
-        <ul class="pm-tech">{p.data.tech.map((tech) => <li>{tech}</li>)}</ul>
-        <div class="pm-actions">
-          <a class="btn" href={p.data.github} target="_blank" rel="noopener">{t(lang, 'modal.github')}</a>
-          {p.data.demo && <a class="btn" href={p.data.demo} target="_blank" rel="noopener">{t(lang, 'modal.demo')}</a>}
-        </div>
-        <div class="pm-body" set:html={p.html} />
+    <h2>{p.data.title[lang]}</h2>
+    <p class="pm-period">{p.data.period}</p>
+    <ul class="pm-tech">{p.data.tech.map((tech) => <li>{tech}</li>)}</ul>
+    <div class="pm-actions">
+      <a class="btn" href={p.data.github} target="_blank" rel="noopener">{t(lang, 'modal.github')}</a>
+      {p.data.demo && <a class="btn" href={p.data.demo} target="_blank" rel="noopener">{t(lang, 'modal.demo')}</a>}
+    </div>
+    {null /* astro 컴파일러 우회: 이 위치에 표현식 노드가 없으면 esbuild 파싱 오류 발생 */}
+    <div class="pm-body" set:html={p.html} />
       </div>
     </div>
   </template>
@@ -71,7 +69,7 @@ const rendered = projects.map((p) => ({
     width: 36px; height: 36px; box-shadow: var(--shadow); }
   .pm-content, .pm-layout { height: 100%; }
 
-  /* 인스타그램형 배치: 왼쪽 사진 / 오른쪽 스크롤 내용 */
+  /* 인스타그램형 배치: 왼쪽 사진 캐러셀 / 오른쪽 스크롤 내용 */
   .pm-layout { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
   .pm-photos { position: relative; background: rgb(0 0 0 / 0.88); overflow: hidden; }
   .pm-track { display: flex; height: 100%; transition: transform 0.35s ease; }
