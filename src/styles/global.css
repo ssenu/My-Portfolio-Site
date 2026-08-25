@@ -65,7 +65,7 @@ body::after {
 }
 img { max-width: 100%; display: block; }
 a { color: inherit; }
-button { font: inherit; cursor: pointer; }
+button { font: inherit; color: inherit; cursor: pointer; }
 
 /* ── 공통 레이아웃·섹션 ───────────────────── */
 .section { max-width: 960px; margin: 0 auto; padding: 96px 24px; }
