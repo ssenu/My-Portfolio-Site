@@ -16,9 +16,9 @@
   org: { ko: "영남이공대학교 공학기술교육혁신센터", en: "Engineering Education Innovation Center, Yeungnam University College" }
   period: "2024.06.05"
   scan: "/images/achievements/program-design-thinking-2024.jpg"
-- id: program-work-experience-2026
-  name: { ko: "2026년도 미래내일 일경험 선수교육 이수", en: "2026 Future-Work Experience Preliminary Training Completion" }
-  detail: { ko: "프로젝트형 일경험 선수교육 (2h)", en: "Project-type work-experience training (2h)" }
-  org: { ko: "미래내일 일경험 통합지원센터", en: "Future-Work Experience Support Center" }
-  period: "2026.06.28"
-  scan: "/images/achievements/program-work-experience-2026.jpg"
+- id: program-youth-work-experience-2026
+  name: { ko: "2026년도 청년 일경험 지원사업 수료", en: "2026 Youth Work Experience Program Completion" }
+  detail: { ko: "AI 기반 계약서 분석 자문 서비스 개발 프로젝트 (8주, IT 개발자)", en: "AI contract-analysis advisory service project (8 weeks, IT developer)" }
+  org: { ko: "고용노동부·청년일경험 통합지원센터", en: "Ministry of Employment & Labor · Youth Work Experience Support Center" }
+  period: "2026.07.06 ~ 2026.08.30"
+  scan: "/images/achievements/program-youth-work-experience-2026.jpg"
