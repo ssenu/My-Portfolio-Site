@@ -99,6 +99,12 @@ const rendered = projects.map((p) => ({
   .pm-body :is(h2, h3) { margin: 20px 0 8px; }
   .pm-body p { margin-bottom: 12px; }
   .pm-body img { border-radius: 8px; }
+  /* 본문 마크다운 표 */
+  .pm-body table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 12px 0 16px; }
+  .pm-body th, .pm-body td { border: 1px solid var(--border); padding: 8px 10px;
+    text-align: left; vertical-align: top; }
+  .pm-body th { background: var(--card); white-space: nowrap; }
+  .pm-body td:first-child { white-space: nowrap; color: var(--accent); font-weight: 600; }
 
   /* 모바일: 위 사진 / 아래 내용 스택 */
   @media (max-width: 760px) {
